@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Philippine Consulate General — Design System
+  Tokens inferred from the Figma "Philippines Consulate" file.
+  Primary = deep royal-blue used across the nav, footer and section headings.
+*/
+
+@theme {
+  /* Brand palette */
+  --color-primary: #1b2a83;
+  --color-primary-dark: #141f63;
+  --color-primary-light: #2a3ba8;
+  --color-primary-50: #eef1fb;
+  --color-primary-100: #dde3f6;
+  --color-primary-600: #253699;
+
+  --color-accent: #2f6bff;
+  --color-accent-soft: #eaf0ff;
+
+  --color-flag-red: #ce1126;
+  --color-flag-blue: #0038a8;
+  --color-flag-yellow: #fcd116;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5f6fb;
+  --color-surface-sunken: #eef0f7;
+
+  /* Ink */
+  --color-ink: #14181f;
+  --color-ink-soft: #3f4654;
+  --color-ink-muted: #6b7280;
+
+  /* Lines */
+  --color-line: #e6e8ef;
+  --color-line-strong: #d3d7e2;
+
+  /* Feedback */
+  --color-notice-bg: #fef2f3;
+  --color-notice-border: #f0b4bb;
+  --color-notice-ink: #b42318;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-poppins), var(--font-inter), ui-sans-serif, sans-serif;
+
+  /* Radius (generates `rounded-card`) */
+  --radius-card: 16px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(20, 31, 99, 0.04), 0 8px 24px rgba(20, 31, 99, 0.06);
+  --shadow-card-hover: 0 4px 10px rgba(20, 31, 99, 0.08), 0 16px 40px rgba(20, 31, 99, 0.12);
+
+  /* Layout — matches the header wrapper (max-w-340 = 1360px) so page
+     content aligns edge-to-edge with the navbar */
+  --container-max: 85rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* offset for sticky header when jumping to anchors */
+    scroll-padding-top: 120px;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: inherit;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Shared centered content wrapper */
+  .container-site {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: 1rem; /* px-4 — matches navbar */
+  }
+
+  @media (min-width: 640px) {
+    .container-site {
+      padding-inline: 1.5rem; /* sm:px-6 — matches navbar */
+    }
+  }
 }
