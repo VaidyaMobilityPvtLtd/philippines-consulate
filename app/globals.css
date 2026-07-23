@@ -8,15 +8,16 @@
 
 @theme {
   /* Brand palette */
-  --color-primary: #1b2a83;
-  --color-primary-dark: #141f63;
-  --color-primary-light: #2a3ba8;
-  --color-primary-50: #eef1fb;
-  --color-primary-100: #dde3f6;
-  --color-primary-600: #253699;
+  --color-primary: #2e3192;
+  --color-primary-dark: #22246c;
+  --color-primary-light: #4549ad;
+  --color-primary-50: #f0f1fb;
+  --color-primary-100: #dfe1f7;
+  --color-primary-200: #c9cdf1;
+  --color-primary-600: #2f3398;
 
-  --color-accent: #2f6bff;
-  --color-accent-soft: #eaf0ff;
+  --color-accent: #2e3192;
+  --color-accent-soft: #ececf8;
 
   --color-flag-red: #ce1126;
   --color-flag-blue: #0038a8;
@@ -41,33 +42,35 @@
   --color-notice-border: #f0b4bb;
   --color-notice-ink: #b42318;
 
-  /* Typography */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-poppins), var(--font-inter), ui-sans-serif, sans-serif;
+  /* Typography
+     heading = Roboto Condensed (Figma primary)
+     sans    = Source Sans 3 (body, forms, UI copy) */
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-roboto-condensed), ui-sans-serif, system-ui, sans-serif;
 
-  /* Radius (generates `rounded-card`) */
+  /* Radius */
   --radius-card: 16px;
 
   /* Shadows */
-  --shadow-card: 0 1px 2px rgba(20, 31, 99, 0.04), 0 8px 24px rgba(20, 31, 99, 0.06);
-  --shadow-card-hover: 0 4px 10px rgba(20, 31, 99, 0.08), 0 16px 40px rgba(20, 31, 99, 0.12);
+  --shadow-card: 0 1px 2px rgba(20, 31, 99, 0.04), 0 10px 28px rgba(20, 31, 99, 0.07);
+  --shadow-card-hover: 0 6px 16px rgba(20, 31, 99, 0.1), 0 18px 40px rgba(20, 31, 99, 0.12);
 
-  /* Layout — matches the header wrapper (max-w-340 = 1360px) so page
-     content aligns edge-to-edge with the navbar */
+  /* Layout */
   --container-max: 85rem;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* offset for sticky header when jumping to anchors */
-    scroll-padding-top: 120px;
+    scroll-padding-top: 100px;
   }
 
   body {
     background: var(--color-surface);
     color: var(--color-ink);
     font-family: var(--font-sans);
+    font-size: 15.5px;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -76,25 +79,102 @@
     font-family: var(--font-heading);
     font-weight: 600;
     letter-spacing: -0.01em;
+    line-height: 1.18;
   }
 
   a {
     color: inherit;
   }
+
+  p {
+    line-height: 1.7;
+  }
+
+  ::selection {
+    background: rgba(46, 49, 146, 0.14);
+    color: var(--color-primary-dark);
+  }
 }
 
 @layer components {
-  /* Shared centered content wrapper */
   .container-site {
     width: 100%;
     max-width: var(--container-max);
     margin-inline: auto;
-    padding-inline: 1rem; /* px-4 — matches navbar */
+    padding-inline: 1.25rem;
   }
 
   @media (min-width: 640px) {
     .container-site {
-      padding-inline: 1.5rem; /* sm:px-6 — matches navbar */
+      padding-inline: 1.5rem;
     }
+  }
+
+  @media (min-width: 1024px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  .home-fade-up {
+    animation: home-fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .home-fade-up-delay-1 { animation-delay: 0.08s; }
+  .home-fade-up-delay-2 { animation-delay: 0.16s; }
+  .home-fade-up-delay-3 { animation-delay: 0.24s; }
+  .home-fade-up-delay-4 { animation-delay: 0.32s; }
+
+  .home-float {
+    animation: home-float 10s ease-in-out infinite;
+  }
+
+  .site-hero-bg {
+    background:
+      radial-gradient(circle at 12% 20%, rgba(252, 209, 22, 0.16), transparent 34%),
+      radial-gradient(circle at 88% 15%, rgba(69, 73, 173, 0.22), transparent 40%),
+      linear-gradient(145deg, #4549ad 0%, #2e3192 42%, #22246c 100%);
+  }
+
+  .attraction-fade-up {
+    animation: home-fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .attraction-fade-up-delay-1 { animation-delay: 0.1s; }
+  .attraction-fade-up-delay-2 { animation-delay: 0.2s; }
+  .attraction-fade-up-delay-3 { animation-delay: 0.32s; }
+
+  .attraction-kenburns {
+    animation: attraction-kenburns 22s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes home-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes home-float {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-52%) translateX(-8px); }
+}
+
+@keyframes attraction-kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-fade-up,
+  .home-float,
+  .attraction-fade-up,
+  .attraction-kenburns {
+    animation: none !important;
   }
 }

@@ -41,7 +41,7 @@ export function HeroMedia({
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-linear-to-br from-primary via-primary-light to-primary-dark text-white">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[url(/seal.svg)] bg-[length:220px] bg-center bg-no-repeat opacity-[0.12]"
+            className="pointer-events-none absolute inset-0 bg-[url(/logo.svg)] bg-[length:220px] bg-center bg-no-repeat opacity-[0.12]"
           />
           <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
             <Icon name="image" size={26} />

@@ -2,17 +2,17 @@ import type { QuickLink } from "@/lib/types";
 
 export const homeHero = {
   eyelet: "Consulate General of the Philippines · Kathmandu",
-  title: "Welcome to the Philippine Consulate General in Nepal",
+  title: "Your gateway to Philippine consular services in Nepal",
   subtitle:
-    "Your gateway to visa, passport and consular services, and to everything you need to know about traveling between the Philippines and Nepal.",
+    "Visa, passport, and registration support — with clear guidance for travel, study, and exchange between the Philippines and Nepal.",
   primaryCta: { label: "Explore Visa & Migration", href: "/visa-migration" },
   secondaryCta: { label: "Contact the Consulate", href: "/contact" },
 };
 
 export const homeIntro = {
-  heading: "How can we help you today?",
+  heading: "More services & information",
   body:
-    "The Consulate General of the Philippines in Kathmandu provides consular assistance to Filipino nationals and facilitates travel, study, trade and cultural exchange between the Philippines and Nepal. Use the quick links below to find the service or information you are looking for.",
+    "Explore travel, study, and country information from the Philippine Consulate General in Kathmandu.",
 };
 
 /**
@@ -59,7 +59,7 @@ export const quickLinks: QuickLink[] = [
     title: "About Philippines",
     description:
       "An overview of the Philippines — its economy, foreign policy and trade relations.",
-    href: "/about-philippines",
+    href: "/about-philippines", 
     icon: "aboutPh",
     links: [
       { label: "Overview", href: "/about-philippines/overview" },

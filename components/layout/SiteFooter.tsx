@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/icons";
 import { footerNav } from "@/lib/navigation";
@@ -15,7 +14,8 @@ export function SiteFooter() {
           {/* Identity + contact */}
           <div>
             <div className="flex items-center gap-3">
-              <Image src="/seal.svg" alt="" width={48} height={48} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.svg" alt="" width={48} height={53} className="object-contain" />
               <div className="leading-tight">
                 <p className="font-heading text-base font-semibold text-white">{site.name}</p>
                 <p className="text-xs uppercase tracking-wider text-white/60">{site.location}</p>
@@ -70,7 +70,15 @@ export function SiteFooter() {
           <p>
             © {year} {site.name}. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:justify-end">
+            <a
+              href={site.external.passport}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 hover:text-white"
+            >
+              Passport.gov.ph <Icon name="external" size={12} />
+            </a>
             <a
               href={site.external.immigration}
               target="_blank"
@@ -78,6 +86,14 @@ export function SiteFooter() {
               className="inline-flex items-center gap-1 hover:text-white"
             >
               Bureau of Immigration <Icon name="external" size={12} />
+            </a>
+            <a
+              href={site.external.dfa}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 hover:text-white"
+            >
+              DFA <Icon name="external" size={12} />
             </a>
             <a
               href={site.external.government}

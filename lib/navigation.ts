@@ -31,7 +31,7 @@ export const mainNav: NavItem[] = [
     ],
   },
   {
-    label: "Passport Service",
+    label: "Passport Services",
     href: "/passport-service",
     children: [
       { label: "New Passport", href: "/passport-service/new-passport" },

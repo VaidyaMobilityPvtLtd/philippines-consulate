@@ -5,8 +5,8 @@ import { Icon } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 /**
- * Header search field. Presentational for now (no search index yet) — submits
- * are intercepted. Wire `onSubmit` to a /search route when search is built.
+ * Header search field — pill shape matching Figma ("Search....").
+ * Presentational for now; wire to a /search route when ready.
  */
 export function SearchBar({ className }: { className?: string }) {
   const [query, setQuery] = useState("");
@@ -16,18 +16,18 @@ export function SearchBar({ className }: { className?: string }) {
       role="search"
       onSubmit={(e) => e.preventDefault()}
       className={cn(
-        "flex items-center gap-2 rounded-full border border-line-strong bg-surface px-4 py-2 text-sm transition-colors focus-within:border-primary",
+        "flex items-center gap-2 rounded-full border border-[#e8e8ee] bg-white px-3.5 py-1.5 text-sm shadow-[0_1px_3px_rgba(20,24,31,0.07)]",
         className,
       )}
     >
-      <Icon name="search" size={16} className="shrink-0 text-ink-muted" />
+      <Icon name="search" size={16} className="shrink-0 text-[#b0b4be]" />
       <input
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search..."
+        placeholder="Search...."
         aria-label="Search the site"
-        className="w-full min-w-0 bg-transparent text-ink placeholder:text-ink-muted focus:outline-none"
+        className="w-full min-w-0 bg-transparent text-ink placeholder:text-[#b0b4be] focus:outline-none"
       />
     </form>
   );

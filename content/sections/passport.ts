@@ -73,7 +73,7 @@ export const passportPages: Record<string, PageContent> = {
           "Proof of actual residence (driver's license, state ID, employment ID, or similar).",
           "Four photographs (1.77\" x 1.37\", taken within six months). The photo must show the applicant's front view, in decent attire and without eyeglasses. Digital photographs will not be accepted.",
         ],
-      },
+      }, 
       { type: "heading", text: "For Married Women Using Married Name" },
       {
         type: "list",

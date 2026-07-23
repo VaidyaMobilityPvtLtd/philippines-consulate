@@ -1,15 +1,77 @@
 import type { Metadata } from "next";
-import { PlaceholderPage } from "@/components/page/PlaceholderPage";
+import Link from "next/link";
+import { PageHero } from "@/components/ui/PageHero";
+import { Section } from "@/components/ui/Section";
+import { Icon } from "@/components/icons";
+import { newsItems } from "@/content/news";
 
-export const metadata: Metadata = { title: "News" };
+export const metadata: Metadata = {
+  title: "News & Announcements",
+  description: "Advisories, notices, and announcements from the Philippine Consulate General in Kathmandu.",
+};
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
 
 export default function NewsPage() {
   return (
-    <PlaceholderPage
-      eyebrow="Updates"
-      title="News & Announcements"
-      intro="The latest news, advisories and announcements from the Consulate General."
-      breadcrumb={[{ label: "Home", href: "/" }, { label: "News", href: "/news" }]}
-    />
+    <>
+      <PageHero
+        eyebrow="Updates"
+        title="News & Announcements"
+        intro="Advisories and notices from the Consulate General — similar to the NewsRoom on DFA foreign posts."
+        breadcrumb={[
+          { label: "Home", href: "/" },
+          { label: "News", href: "/news" },
+        ]}
+      />
+      <Section>
+        <ul className="mx-auto max-w-3xl space-y-4">
+          {newsItems.map((item) => (
+            <li key={item.slug}>
+              <article className="rounded-2xl border border-line bg-surface p-5 shadow-card md:p-6">
+                <div className="flex flex-wrap items-center gap-2 text-xs">
+                  <span className="rounded-full bg-primary-50 px-2.5 py-0.5 font-semibold uppercase tracking-wide text-primary">
+                    {item.category}
+                  </span>
+                  <time dateTime={item.date} className="text-ink-muted">
+                    {formatDate(item.date)}
+                  </time>
+                </div>
+                <h2 className="mt-3 font-heading text-xl font-semibold text-ink">{item.title}</h2>
+                <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">{item.summary}</p>
+                <ul className="mt-4 space-y-2 border-t border-line pt-4">
+                  {item.body.map((para) => (
+                    <li key={para} className="flex gap-2.5 text-sm leading-relaxed text-ink-soft">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+                      <span>{para}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-line bg-surface-muted p-5 text-center md:p-6">
+          <p className="text-sm text-ink-soft">
+            Need help with a specific service? Browse requirements or contact the Consulate.
+          </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-4">
+            <Link href="/visa-migration" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+              Visa & Migration <Icon name="arrowRight" size={14} />
+            </Link>
+            <Link href="/contact" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+              Contact us <Icon name="arrowRight" size={14} />
+            </Link>
+          </div>
+        </div>
+      </Section>
+    </>
   );
 }

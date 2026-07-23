@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Roboto_Condensed, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { site } from "@/lib/site";
 
-const inter = Inter({
+/** Primary / display — Figma brand font for titles & nav emphasis */
+const robotoCondensed = Roboto_Condensed({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-roboto-condensed",
   display: "swap",
 });
 
-const poppins = Poppins({
+/** Body — open, readable companion for paragraphs, forms, and UI copy */
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-source-sans",
   display: "swap",
 });
 
@@ -24,15 +27,15 @@ export const metadata: Metadata = {
     template: `%s · ${site.shortName}`,
   },
   description: site.tagline,
-  icons: { icon: "/seal.svg" },
+  icons: { icon: "/logo.png" },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="flex min-h-screen flex-col bg-surface">
+    <html lang="en" className={`${robotoCondensed.variable} ${sourceSans.variable}`}>
+      <body className="flex min-h-screen flex-col bg-surface font-sans">
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

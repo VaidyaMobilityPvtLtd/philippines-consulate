@@ -21,6 +21,8 @@ export const site = {
   external: {
     immigration: "https://immigration.gov.ph",
     government: "https://www.gov.ph",
+    dfa: "https://dfa.gov.ph",
+    passport: "https://www.passport.gov.ph",
     visitNepal: "https://visitnepal2020.com/",
   },
 } as const;

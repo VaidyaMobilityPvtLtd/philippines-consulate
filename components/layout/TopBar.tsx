@@ -5,24 +5,22 @@ import { SearchBar } from "./SearchBar";
 import { utilityNav } from "@/lib/navigation";
 
 /**
- * Top white bar (desktop): emblem + search on the left, utility links on the
- * right. Matches the Figma header. Hidden below xl, where MainNav shows a
- * compact logo + hamburger instead.
+ * Top white bar (desktop): emblem + search left, utility links right.
+ * Kept compact to match Figma proportions.
  */
 export function TopBar() {
   return (
-    <div className="hidden border-b border-line bg-surface xl:block">
-      <Container className="flex items-center justify-between gap-6 py-3">
-        <div className="flex items-center gap-5">
-          <Logo variant="onLight" showWordmark className="hidden 2xl:flex" />
-          <Logo variant="onLight" showWordmark={false} className="flex 2xl:hidden" />
-          <SearchBar className="w-72 2xl:w-80" />
+    <div className="hidden bg-white xl:block">
+      <Container className="flex items-center justify-between gap-8 py-2">
+        <div className="flex min-w-0 flex-1 items-center gap-5">
+          <Logo variant="onLight" showWordmark={false} size={48} />
+          <SearchBar className="w-full max-w-[360px] 2xl:max-w-[400px]" />
         </div>
-        <nav aria-label="Utility navigation">
-          <ul className="flex items-center gap-6 text-xs font-semibold uppercase tracking-wider text-primary">
+        <nav aria-label="Utility navigation" className="shrink-0">
+          <ul className="flex items-center gap-7 font-heading text-[12px] font-bold uppercase tracking-[0.04em] text-primary 2xl:gap-8">
             {utilityNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="transition-colors hover:text-primary-light">
+                <Link href={item.href} className="transition-opacity hover:opacity-70">
                   {item.label}
                 </Link>
               </li>

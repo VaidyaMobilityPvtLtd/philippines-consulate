@@ -1,16 +1,14 @@
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * Site emblem + wordmark, linking home. `variant` switches text colour for
- * light (white top bar) vs dark (navy bar) backgrounds. `showWordmark={false}`
- * renders the emblem alone (used on narrower widths).
+ * Site emblem + optional wordmark. Uses the official SVG coat of arms
+ * so it stays sharp at any size.
  */
 export function Logo({
   variant = "onLight",
   showWordmark = true,
-  size = 46,
+  size = 48,
   className,
 }: {
   variant?: "onLight" | "onDark";
@@ -23,14 +21,22 @@ export function Logo({
     <Link
       href="/"
       aria-label="Home — Consulate General of the Philippines"
-      className={cn("flex items-center gap-3", className)}
+      className={cn("flex items-center gap-3.5", className)}
     >
-      <Image src="/seal.svg" alt="" width={size} height={size} className="shrink-0" priority />
+      {/* eslint-disable-next-line @next/next/no-img-element -- SVG logo must stay crisp */}
+      <img
+        src="/logo.svg"
+        alt=""
+        width={size}
+        height={Math.round(size * 1.11)}
+        className="shrink-0 object-contain"
+        decoding="async"
+      />
       {showWordmark && (
         <span className="flex flex-col leading-tight">
           <span
             className={cn(
-              "font-heading text-[15px] font-semibold",
+              "font-heading text-[15px] font-semibold tracking-[-0.01em]",
               onDark ? "text-white" : "text-primary",
             )}
           >
@@ -38,7 +44,7 @@ export function Logo({
           </span>
           <span
             className={cn(
-              "text-[11px] uppercase tracking-[0.14em]",
+              "mt-0.5 text-[11px] uppercase tracking-[0.16em]",
               onDark ? "text-white/60" : "text-ink-muted",
             )}
           >

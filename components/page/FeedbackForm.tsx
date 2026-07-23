@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Icon } from "@/components/icons";
 
 const inputClass =
-  "w-full rounded-lg border border-line bg-surface px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted transition-colors focus:border-primary focus:outline-none";
+  "w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15";
 const labelClass = "mb-1.5 block text-sm font-medium text-ink";
 
 /**
@@ -16,8 +16,8 @@ export function FeedbackForm() {
 
   if (sent) {
     return (
-      <div className="rounded-card border border-line bg-surface-muted p-8 text-center">
-        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft text-primary">
+      <div className="rounded-2xl border border-line bg-surface-muted p-8 text-center shadow-card">
+        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-50 text-primary">
           <Icon name="mail" size={26} />
         </span>
         <h2 className="mt-4 font-heading text-xl font-semibold text-ink">Thank you for your feedback</h2>
@@ -34,7 +34,7 @@ export function FeedbackForm() {
         e.preventDefault();
         setSent(true);
       }}
-      className="rounded-card border border-line bg-surface p-6 shadow-card md:p-8"
+      className="rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>

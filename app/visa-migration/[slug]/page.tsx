@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Section } from "@/components/ui/Section";
+import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { ContentRenderer } from "@/components/content/ContentRenderer";
+import { VisaTopicNav, VisaNextSteps } from "@/components/page/VisaTopicNav";
+import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/icons";
 import { visaSubpages, visaSubpageSlugs } from "@/content/visa/subpages";
-import { cn } from "@/lib/utils";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -26,7 +27,13 @@ export default async function VisaSubPage({ params }: Params) {
   const page = visaSubpages[slug];
   if (!page) notFound();
 
-  const related = visaSubpageSlugs.map((s) => ({ slug: s, title: visaSubpages[s].title }));
+  const topics = visaSubpageSlugs.map((s) => ({
+    slug: s,
+    title: visaSubpages[s].title,
+  }));
+  const index = topics.findIndex((t) => t.slug === slug);
+  const next = index >= 0 && index < topics.length - 1 ? topics[index + 1] : null;
+  const isOverviewTopic = slug === "what-is-philippine-visa";
 
   return (
     <>
@@ -41,56 +48,70 @@ export default async function VisaSubPage({ params }: Params) {
         ]}
       />
 
-      <Section>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_260px]">
-          {/* Main content */}
-          <article className="max-w-3xl">
-            <ContentRenderer blocks={page.sections} />
+      <section className="bg-linear-to-b from-primary-50/80 to-white py-8 md:py-10">
+        <Container>
+          {/* Clear navigation first — reduces confusion */}
+          <VisaTopicNav topics={topics} currentSlug={slug} />
 
-            <div className="mt-10 border-t border-line pt-6">
-              <Link
-                href="/visa-migration"
-                className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
-              >
-                <Icon name="chevronRight" size={16} className="rotate-180" />
-                Back to Visa &amp; Migration
-              </Link>
-            </div>
-          </article>
+          <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
+            {/* Main reading column */}
+            <div>
+              <article className="overflow-hidden rounded-2xl border border-primary/10 bg-white shadow-card">
+                <div className="flex items-center justify-between gap-3 border-b border-line bg-white px-5 py-3.5 md:px-6">
+                  <p className="text-sm font-medium text-ink-soft">
+                    <span className="font-semibold text-primary">Reading:</span> {page.title}
+                  </p>
+                  <Link
+                    href="/visa-migration"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                  >
+                    <Icon name="chevronRight" size={12} className="rotate-180" />
+                    Overview
+                  </Link>
+                </div>
+                <div className="p-5 md:p-7">
+                  <ContentRenderer blocks={page.sections} />
+                </div>
+              </article>
 
-          {/* Section sidebar */}
-          <aside className="lg:sticky lg:top-32 lg:self-start">
-            <div className="rounded-card border border-line bg-surface-muted p-5">
-              <h2 className="font-heading text-sm font-semibold uppercase tracking-wide text-primary">
-                In this section
-              </h2>
-              <nav aria-label="Visa & Migration pages" className="mt-3">
-                <ul className="space-y-0.5">
-                  {related.map((item) => {
-                    const active = item.slug === page.slug;
-                    return (
-                      <li key={item.slug}>
-                        <Link
-                          href={`/visa-migration/${item.slug}`}
-                          aria-current={active ? "page" : undefined}
-                          className={cn(
-                            "block rounded-lg px-3 py-2 text-sm transition-colors",
-                            active
-                              ? "bg-primary text-white"
-                              : "text-ink-soft hover:bg-primary-50 hover:text-primary",
-                          )}
-                        >
-                          {item.title}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
+              <div className="mt-5 flex flex-wrap gap-3">
+                {next ? (
+                  <ButtonLink href={`/visa-migration/${next.slug}`} variant="primary">
+                    Next: {next.title}
+                    <Icon name="arrowRight" size={15} />
+                  </ButtonLink>
+                ) : (
+                  <ButtonLink href="/visa-migration" variant="primary">
+                    Back to Visa & Migration
+                  </ButtonLink>
+                )}
+                <ButtonLink href="/contact" variant="secondary">
+                  Ask the Consulate
+                </ButtonLink>
+              </div>
             </div>
-          </aside>
-        </div>
-      </Section>
+
+            {/* Helpful next steps — not a long duplicate nav */}
+            <aside className="space-y-4 lg:sticky lg:top-28">
+              <VisaNextSteps next={next} showDefaults={isOverviewTopic || !next} />
+
+              <div className="rounded-2xl border border-line bg-white p-5 shadow-card">
+                <p className="font-heading text-sm font-semibold text-ink">Need help now?</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                  Contact the Consulate for category advice, fees, and documents.
+                </p>
+                <Link
+                  href="/contact"
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                >
+                  Contact us
+                  <Icon name="arrowRight" size={14} />
+                </Link>
+              </div>
+            </aside>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }

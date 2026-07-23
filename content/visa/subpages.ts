@@ -11,15 +11,39 @@ export const visaSubpages: Record<string, PageContent> = {
     title: "What is a Philippine Visa",
     section: "Visa & Migration",
     intro:
-      "Understanding what a Philippine visa is — and what it does and does not guarantee.",
+      "A short explanation of what a visa means — and what it does not guarantee at the airport.",
     sections: [
       {
+        type: "heading",
+        text: "In simple terms",
+      },
+      {
         type: "paragraph",
-        text: "A Philippine visa is an endorsement made on a travel document by a consular officer at a Philippine Embassy or Consulate abroad denoting that the visa applicant has been properly examined and that the bearer is permitted to proceed to the Philippines and request permission from the Philippine Immigration authorities at the ports of entries to enter the country.",
+        text: "A Philippine visa is an endorsement placed on your passport by a consular officer at a Philippine Embassy or Consulate. It shows that your application was reviewed and that you may travel to the Philippines and request entry from immigration officers at the port of entry.",
+      },
+      {
+        type: "heading",
+        text: "What a visa does",
+      },
+      {
+        type: "list",
+        items: [
+          "Confirms your documents were examined by a consular officer abroad.",
+          "Allows you to proceed to the Philippines and present yourself to immigration.",
+          "States the visa type and, where applicable, the period for which you may apply to stay.",
+        ],
+      },
+      {
+        type: "heading",
+        text: "What a visa does not do",
       },
       {
         type: "note",
-        text: "The visa thus issued is not a guarantee that the holder will be automatically admitted into the country, because the admission of foreign nationals into the Philippines is a function of the immigration authorities at the port of entry.",
+        text: "A visa is not a guarantee of admission. Final permission to enter the Philippines is decided by Philippine immigration authorities at the airport or seaport.",
+      },
+      {
+        type: "paragraph",
+        text: "Next, check whether you need a visa at all (visa-free list), or open the requirements for business/tourism, study, or other categories.",
       },
     ],
   },
@@ -41,7 +65,7 @@ export const visaSubpages: Record<string, PageContent> = {
         text: "For stays exceeding 21 days, a temporary visitor's visa is required, issued by the Philippine Consul General in Kathmandu.",
       },
       {
-        type: "note",
+        type: "note", 
         text: "A visa shall NOT be given to an applicant for a temporary stay if there is any reason to believe that the visa applicant, once in the Philippines, will change status. Fraud or misrepresentation results in automatic refusal and permanent ineligibility. Issuance of a visa does not guarantee admission to the Philippines.",
       },
       { type: "heading", text: "Requirements for Temporary Visitor's Visa" },
@@ -197,7 +221,7 @@ export const visaSubpages: Record<string, PageContent> = {
         text: "Foreign nationals seeking short-term non-degree courses like language and computer training must apply for a temporary visitor's visa. After arriving in the Philippines and gaining acceptance from a Bureau of Immigration-authorized school, applicants should request a Special Study Permit at the Bureau's Student Desk.",
       },
       { type: "heading", text: "Requirements" },
-      {
+      { 
         type: "list",
         items: [
           "Letter request.",

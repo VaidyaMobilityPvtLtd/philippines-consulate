@@ -20,28 +20,30 @@ function Block({ block }: { block: ContentBlock }) {
   switch (block.type) {
     case "heading":
       return (
-        <h2 className="pt-2 font-heading text-xl font-semibold text-primary">{block.text}</h2>
+        <h2 className="flex items-start gap-3 border-l-4 border-l-primary pl-3.5 font-heading text-xl font-semibold text-primary">
+          {block.text}
+        </h2>
       );
 
     case "paragraph":
       return (
-        <p className="whitespace-pre-line leading-relaxed text-ink-soft">{block.text}</p>
+        <p className="whitespace-pre-line text-[15px] leading-relaxed text-ink-soft">{block.text}</p>
       );
 
     case "list": {
       const List = block.ordered ? "ol" : "ul";
       return (
-        <List className="space-y-2.5">
+        <List className="space-y-2.5 rounded-xl bg-primary-50/50 p-4">
           {block.items.map((item, i) => (
             <li key={i} className="flex gap-3">
               {block.ordered ? (
-                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-50 text-xs font-semibold text-primary">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">
                   {i + 1}
                 </span>
               ) : (
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
               )}
-              <span className="leading-relaxed text-ink-soft">{item}</span>
+              <span className="text-[15px] leading-relaxed text-ink-soft">{item}</span>
             </li>
           ))}
         </List>
@@ -50,12 +52,12 @@ function Block({ block }: { block: ContentBlock }) {
 
     case "table":
       return (
-        <div className="overflow-x-auto rounded-card border border-line">
+        <div className="overflow-x-auto rounded-2xl border border-primary/15 shadow-sm">
           <table className="w-full min-w-130 border-collapse text-sm">
             <thead>
-              <tr className="bg-primary-50 text-left">
+              <tr className="bg-primary text-left">
                 {block.headers.map((h, i) => (
-                  <th key={i} className="px-4 py-3 font-heading font-semibold text-primary">
+                  <th key={i} className="px-4 py-3 font-heading font-semibold text-white">
                     {h}
                   </th>
                 ))}
@@ -63,9 +65,9 @@ function Block({ block }: { block: ContentBlock }) {
             </thead>
             <tbody>
               {block.rows.map((row, ri) => (
-                <tr key={ri} className={cn(ri % 2 === 1 && "bg-surface-muted/50")}>
+                <tr key={ri} className={cn(ri % 2 === 1 ? "bg-primary-50/70" : "bg-white")}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="border-t border-line px-4 py-2.5 align-top text-ink-soft">
+                    <td key={ci} className="border-t border-line px-4 py-3 align-top text-ink-soft">
                       {cell}
                     </td>
                   ))}
@@ -104,15 +106,15 @@ function Block({ block }: { block: ContentBlock }) {
         <ul className="grid gap-2.5 sm:grid-cols-2">
           {block.links.map((link) => (
             <li key={link.href}>
-              <SmartLink
+                  <SmartLink
                 href={link.href}
-                className="group flex items-center justify-between gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-sm font-medium text-ink transition-colors hover:border-primary hover:bg-primary-50 hover:text-primary"
+                className="group flex items-center justify-between gap-3 rounded-xl border border-primary/15 bg-primary-50/40 px-4 py-3 text-sm font-medium text-ink transition-colors hover:border-primary hover:bg-primary hover:text-white"
               >
                 <span>{link.label}</span>
                 <Icon
                   name={isExternal(link.href) ? "external" : "arrowRight"}
                   size={16}
-                  className="shrink-0 text-primary transition-transform group-hover:translate-x-0.5"
+                  className="shrink-0 text-primary transition-transform group-hover:translate-x-0.5 group-hover:text-white"
                 />
               </SmartLink>
             </li>
