@@ -7,6 +7,7 @@ import { ContactForm } from "@/components/page/ContactForm";
 import { Icon } from "@/components/icons";
 import type { IconName } from "@/lib/types";
 import { site } from "@/lib/site";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -65,6 +66,8 @@ export default function ContactPage() {
           { label: "Home", href: "/" },
           { label: "Contact Us", href: "/contact" },
         ]}
+        imageSrc={heroImages.contact.src}
+        imageAlt={heroImages.contact.alt}
       />
 
       <Section>

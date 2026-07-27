@@ -22,6 +22,8 @@ export function ContentPage({
   related,
   helpTitle = "Need more information?",
   helpBody = "Contact the Consulate General in Kathmandu for guidance.",
+  imageSrc,
+  imageAlt,
 }: {
   page: PageContent;
   eyebrow?: string;
@@ -30,6 +32,8 @@ export function ContentPage({
   related?: RelatedLink[];
   helpTitle?: string;
   helpBody?: string;
+  imageSrc?: string;
+  imageAlt?: string;
 }) {
   return (
     <>
@@ -38,6 +42,8 @@ export function ContentPage({
         title={page.title}
         intro={page.intro}
         breadcrumb={breadcrumb}
+        imageSrc={imageSrc}
+        imageAlt={imageAlt}
       />
 
       {highlights && highlights.length > 0 ? (

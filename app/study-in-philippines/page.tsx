@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionHub } from "@/components/page/SectionHub";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: "Study in Philippines",
@@ -17,6 +18,8 @@ export default function StudyInPhilippinesPage() {
         { label: "Home", href: "/" },
         { label: "Study in Philippines", href: "/study-in-philippines" },
       ]}
+      imageSrc={heroImages.study.src}
+      imageAlt={heroImages.study.alt}
       highlights={[
         { label: "Language", value: "English-medium study", icon: "study" },
         { label: "Directory", value: "Universities & colleges", icon: "document" },

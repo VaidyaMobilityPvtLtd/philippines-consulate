@@ -18,16 +18,16 @@ const destinations = [
     kicker: "Culture & heritage",
     body: "Walk Durbar Squares in Kathmandu, Patan, and Bhaktapur. Visit stupas, courtyards, and living neighbourhoods where festivals still shape the year.",
     highlights: ["Durbar Squares", "Boudhanath & Swayambhunath", "Patan craft & courtyards"],
-    image: "/nepal/valley.jpg",
-    alt: "Temple roofs in the Kathmandu Valley",
+    image: "/nepal/durbar.jpg",
+    alt: "Kathmandu Durbar Square temples",
   },
   {
     title: "Himalayan trails",
     kicker: "Adventure",
     body: "World-famous trekking regions, mountain viewpoints, and scenic flights — from Annapurna’s amphitheatre to the Khumbu approaches of Everest.",
     highlights: ["Annapurna region", "Everest / Khumbu", "Mountain viewpoints"],
-    image: "/nepal/trek.jpg",
-    alt: "Himalayan peaks and trekking landscape",
+    image: "/nepal/annapurna.jpg",
+    alt: "Annapurna mountain range",
   },
   {
     title: "Chitwan & the Terai",
@@ -77,8 +77,8 @@ export default function TravelingInNepalPage() {
         eyebrow="Travel Nepal"
         title="Come for the mountains. Stay for the culture."
         intro="From Himalayan trails to Kathmandu’s living heritage — destinations and tips to help you plan an unforgettable visit."
-        imageSrc="/nepal/hero-himalaya.jpg"
-        imageAlt="The Himalayas rising above the clouds"
+        imageSrc="/nepal/prayerflags.jpg"
+        imageAlt="Prayer flags on a Himalayan ridge with snow peaks behind"
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "Traveling in Nepal", href: "/traveling-in-nepal" },
@@ -115,8 +115,9 @@ export default function TravelingInNepalPage() {
             <div className="relative aspect-[4/3] overflow-hidden rounded-sm shadow-card-hover">
               <Image
                 src="/nepal/hero-kathmandu.jpg"
-                alt="Stupa and prayer flags in Kathmandu"
+                alt="Boudhanath Stupa in Kathmandu"
                 fill
+                quality={95}
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"
               />
@@ -225,8 +226,8 @@ export default function TravelingInNepalPage() {
       {/* Closing attraction CTA */}
       <section className="relative overflow-hidden py-20 text-white md:py-24">
         <Image
-          src="/nepal/mountains.jpg"
-          alt="Himalayan panorama"
+          src="/nepal/pokhara.jpg"
+          alt="Boats on Phewa Lake with the Annapurna range behind"
           fill
           sizes="100vw"
           className="object-cover"

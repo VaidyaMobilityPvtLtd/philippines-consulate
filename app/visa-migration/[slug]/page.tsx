@@ -8,8 +8,20 @@ import { VisaTopicNav, VisaNextSteps } from "@/components/page/VisaTopicNav";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/icons";
 import { visaSubpages, visaSubpageSlugs } from "@/content/visa/subpages";
+import { heroImages, type HeroImage } from "@/lib/hero-images";
 
 type Params = { params: Promise<{ slug: string }> };
+
+const visaHeroBySlug: Record<string, HeroImage> = {
+  "what-is-philippine-visa": heroImages.visa,
+  "pleasure-business": heroImages.bohol,
+  "student-visa-requirements": heroImages.study,
+  "pilot-training": heroImages.mayon,
+  "seaman-visa": heroImages.travelPh,
+  "transit-visa": heroImages.jeepney,
+  "other-requirements": heroImages.heritage,
+  "visa-fees": heroImages.passport,
+};
 
 export function generateStaticParams() {
   return visaSubpageSlugs.map((slug) => ({ slug }));
@@ -34,6 +46,7 @@ export default async function VisaSubPage({ params }: Params) {
   const index = topics.findIndex((t) => t.slug === slug);
   const next = index >= 0 && index < topics.length - 1 ? topics[index + 1] : null;
   const isOverviewTopic = slug === "what-is-philippine-visa";
+  const hero = visaHeroBySlug[slug] ?? heroImages.visa;
 
   return (
     <>
@@ -46,6 +59,8 @@ export default async function VisaSubPage({ params }: Params) {
           { label: "Visa & Migration", href: "/visa-migration" },
           { label: page.title, href: `/visa-migration/${page.slug}` },
         ]}
+        imageSrc={hero.src}
+        imageAlt={hero.alt}
       />
 
       <section className="bg-linear-to-b from-primary-50/80 to-white py-8 md:py-10">

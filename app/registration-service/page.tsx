@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionHub } from "@/components/page/SectionHub";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: "Registration Service",
@@ -17,6 +18,8 @@ export default function RegistrationServicePage() {
         { label: "Home", href: "/" },
         { label: "Registration Service", href: "/registration-service" },
       ]}
+      imageSrc={heroImages.registration.src}
+      imageAlt={heroImages.registration.alt}
       highlights={[
         { label: "Reports", value: "Birth · Marriage · Death", icon: "registration" },
         { label: "Who", value: "Filipino citizens abroad", icon: "info" },

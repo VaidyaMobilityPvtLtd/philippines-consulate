@@ -4,6 +4,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { Icon } from "@/components/icons";
 import { newsItems } from "@/content/news";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: "News & Announcements",
@@ -29,6 +30,8 @@ export default function NewsPage() {
           { label: "Home", href: "/" },
           { label: "News", href: "/news" },
         ]}
+        imageSrc={heroImages.news.src}
+        imageAlt={heroImages.news.alt}
       />
       <Section>
         <ul className="mx-auto max-w-3xl space-y-4">

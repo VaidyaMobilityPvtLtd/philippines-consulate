@@ -69,6 +69,8 @@ export function SectionHub({
     { label: "Contact us", href: "/contact", variant: "onDark" },
     { label: "Downloads", href: "/downloads", variant: "ghostDark" },
   ],
+  imageSrc,
+  imageAlt,
 }: {
   eyebrow: string;
   title: string;
@@ -89,13 +91,22 @@ export function SectionHub({
   helpTitle?: string;
   helpBody?: string;
   helpActions?: HubAction[];
+  imageSrc?: string;
+  imageAlt?: string;
 }) {
   const featured = topics.find((t) => t.featured) ?? topics[0];
   const rest = topics.filter((t) => t.href !== featured?.href);
 
   return (
     <>
-      <PageHero eyebrow={eyebrow} title={title} intro={intro} breadcrumb={breadcrumb} />
+      <PageHero
+        eyebrow={eyebrow}
+        title={title}
+        intro={intro}
+        breadcrumb={breadcrumb}
+        imageSrc={imageSrc}
+        imageAlt={imageAlt}
+      />
 
       {highlights && highlights.length > 0 ? (
         <section className="relative z-10 -mt-6">

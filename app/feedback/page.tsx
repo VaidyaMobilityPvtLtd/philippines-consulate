@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { FeedbackForm } from "@/components/page/FeedbackForm";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: "Feedback",
@@ -19,6 +20,8 @@ export default function FeedbackPage() {
           { label: "Home", href: "/" },
           { label: "Feedback", href: "/feedback" },
         ]}
+        imageSrc={heroImages.feedback.src}
+        imageAlt={heroImages.feedback.alt}
       />
       <Section>
         <div className="max-w-3xl">

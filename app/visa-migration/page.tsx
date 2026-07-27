@@ -11,6 +11,7 @@ import { Icon } from "@/components/icons";
 import { visaCategories } from "@/content/visa/categories";
 import { visaFreeCountries, standardStayDays, stayCategories } from "@/content/visa/countries";
 import { entryRequirementCards, entryNotice } from "@/content/visa/requirements";
+import { heroImages } from "@/lib/hero-images";
 import type { IconName } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -60,6 +61,8 @@ export default function VisaMigrationPage() {
           { label: "Home", href: "/" },
           { label: "Visa & Migration", href: "/visa-migration" },
         ]}
+        imageSrc={heroImages.visa.src}
+        imageAlt={heroImages.visa.alt}
       />
 
       {/* Quick jumps */}

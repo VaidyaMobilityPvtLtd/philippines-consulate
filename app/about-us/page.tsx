@@ -7,6 +7,7 @@ import { Icon } from "@/components/icons";
 import { aboutUsPage } from "@/content/sections/about-us";
 import { consulateServices, pillGroups } from "@/content/services";
 import { site } from "@/lib/site";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: aboutUsPage.title,
@@ -39,6 +40,8 @@ export default function AboutUsPage() {
           { label: "Home", href: "/" },
           { label: "About Us", href: "/about-us" },
         ]}
+        imageSrc={heroImages.aboutUs.src}
+        imageAlt={heroImages.aboutUs.alt}
       />
 
       <Section>

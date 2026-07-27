@@ -5,6 +5,7 @@ import { Section } from "@/components/ui/Section";
 import { Notice } from "@/components/ui/Notice";
 import { Icon } from "@/components/icons";
 import { downloadItems } from "@/content/news";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: "Downloads",
@@ -25,6 +26,8 @@ export default function DownloadsPage() {
           { label: "Home", href: "/" },
           { label: "Downloads", href: "/downloads" },
         ]}
+        imageSrc={heroImages.downloads.src}
+        imageAlt={heroImages.downloads.alt}
       />
       <Section>
         <div className="mb-8">

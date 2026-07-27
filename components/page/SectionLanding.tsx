@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/icons";
 import { ComingSoon } from "./ComingSoon";
+import { heroImageForPath } from "@/lib/hero-images";
 import type { NavItem } from "@/lib/types";
 
 const accents = [
@@ -27,12 +28,19 @@ export function SectionLanding({
   item,
   eyebrow = "Consulate Services",
   intro,
+  imageSrc,
+  imageAlt,
 }: {
   item: NavItem;
   eyebrow?: string;
   intro?: string;
+  imageSrc?: string;
+  imageAlt?: string;
 }) {
   const children = item.children ?? [];
+  const fallback = heroImageForPath(item.href);
+  const heroSrc = imageSrc ?? fallback.src;
+  const heroAlt = imageAlt ?? fallback.alt;
 
   return (
     <>
@@ -44,6 +52,8 @@ export function SectionLanding({
           { label: "Home", href: "/" },
           { label: item.label, href: item.href },
         ]}
+        imageSrc={heroSrc}
+        imageAlt={heroAlt}
       />
 
       <Section className="bg-linear-to-b from-primary-50/80 to-white">

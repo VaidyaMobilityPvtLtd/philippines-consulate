@@ -58,8 +58,8 @@ export default function AboutNepalPage() {
         eyebrow="Discover Nepal"
         title="A nation between mountains and myth"
         intro="Squeezed between the Tibetan plateau and the plains of India, Nepal has long been a resting place for traders, travellers, and pilgrims — with the Kathmandu Valley at its heart."
-        imageSrc="/nepal/hero-himalaya.jpg"
-        imageAlt="Snow-capped Himalayan peaks in Nepal"
+        imageSrc="/nepal/durbar.jpg"
+        imageAlt="Kathmandu Durbar Square temples in Nepal"
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "About Nepal", href: "/about-nepal" },

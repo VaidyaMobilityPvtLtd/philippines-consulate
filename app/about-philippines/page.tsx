@@ -1,89 +1,71 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { AttractionHero } from "@/components/ui/AttractionHero";
 import { Container } from "@/components/ui/Container";
-import { PageHero } from "@/components/ui/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/icons";
-import type { IconName } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "About Philippines",
   description:
-    "Discover the Philippines — geography, people, economy, foreign policy, and trade relations.",
+    "Discover the Philippines — an archipelago of more than seven thousand islands, rich culture, and warm hospitality.",
 };
 
-const highlights: { label: string; value: string; icon: IconName }[] = [
-  { label: "Islands", value: "7,107", icon: "globe" },
-  { label: "Capital", value: "Manila", icon: "mapPin" },
-  { label: "Language", value: "Filipino & English", icon: "aboutPh" },
-  { label: "Time zone", value: "GMT +8", icon: "clock" },
+const facts = [
+  { label: "Islands", value: "7,107" },
+  { label: "Capital", value: "Manila" },
+  { label: "Languages", value: "Filipino & English" },
+  { label: "Time", value: "GMT +8" },
 ];
 
-const topics: {
-  title: string;
-  description: string;
-  href: string;
-  icon: IconName;
-  accent: string;
-  featured?: boolean;
-}[] = [
+const moments = [
+  {
+    title: "An archipelago of islands",
+    text: "From turquoise lagoons to volcanic peaks — over seven thousand islands stretch from south of China to the tip of Borneo.",
+    image: "/philippines/beach.jpg",
+    alt: "Crystal-clear tropical beach in the Philippines",
+  },
+  {
+    title: "A meeting of cultures",
+    text: "Malay roots, Spanish colonial heritage, and American influence shaped a unique Filipino identity — warm, expressive, and welcoming.",
+    image: "/philippines/heritage.jpg",
+    alt: "Colonial heritage streetscape in the Philippines",
+  },
+  {
+    title: "Living landscapes",
+    text: "Ancient rice terraces, tropical coasts, and highland towns show how geography and community have shaped Filipino life for centuries.",
+    image: "/philippines/mayon.jpg",
+    alt: "Mayon Volcano in the Philippines",
+  },
+];
+
+const topics = [
   {
     title: "Philippines at a Glance",
-    description:
-      "People, geography, climate, government, and what makes Filipino culture unique.",
+    description: "People, geography, climate, government, and culture.",
     href: "/about-philippines/overview",
-    icon: "aboutPh",
-    accent: "bg-flag-blue",
     featured: true,
   },
   {
     title: "Economy",
-    description: "Economic overview, development priorities, and official resources.",
+    description: "Economic overview and development priorities.",
     href: "/about-philippines/economy",
-    icon: "business",
-    accent: "bg-flag-yellow text-ink",
   },
   {
     title: "Foreign Policy",
-    description: "How the Philippines engages the region and the wider world.",
+    description: "How the Philippines engages the region and the world.",
     href: "/about-philippines/foreign-policy",
-    icon: "globe",
-    accent: "bg-flag-red",
   },
   {
     title: "Trade Policy",
-    description: "Trade orientation, partnerships, and commercial relations.",
+    description: "Trade orientation, partnerships, and commerce.",
     href: "/about-philippines/trade-policy",
-    icon: "document",
-    accent: "bg-primary",
   },
   {
     title: "Information Directory",
-    description: "Useful references and contacts for learning more about the country.",
+    description: "Useful references for learning more about the country.",
     href: "/about-philippines/directory",
-    icon: "info",
-    accent: "bg-primary-dark",
-  },
-];
-
-const related: { title: string; description: string; href: string; icon: IconName }[] = [
-  {
-    title: "Study in Philippines",
-    description: "Universities, colleges, and guidance for Nepalese students.",
-    href: "/study-in-philippines",
-    icon: "study",
-  },
-  {
-    title: "Traveling in Philippines",
-    description: "Tourism highlights, destinations, and visitor information.",
-    href: "/traveling-in-philippines",
-    icon: "travel",
-  },
-  {
-    title: "Visa & Migration",
-    description: "Visa categories, visa-free entry, and application guidance.",
-    href: "/visa-migration",
-    icon: "visa",
   },
 ];
 
@@ -93,186 +75,164 @@ export default function AboutPhilippinesPage() {
 
   return (
     <>
-      <PageHero
-        eyebrow="Discover"
-        title="About the Philippines"
-        intro="An archipelago of more than seven thousand islands — with a unique blend of Malay, Spanish, and American heritage, and one of Asia’s largest English-speaking populations."
+      <AttractionHero
+        eyebrow="Discover the Philippines"
+        title="Seven thousand islands. One vibrant nation."
+        intro="A tropical archipelago where Malay, Spanish, and American heritage meet — with one of Asia’s largest English-speaking populations."
+        imageSrc="/philippines/beach.jpg"
+        imageAlt="Tropical beach in the Philippines"
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "About Philippines", href: "/about-philippines" },
         ]}
+        primaryCta={{ label: "At a Glance", href: "/about-philippines/overview" }}
+        secondaryCta={{ label: "Plan a visit", href: "/traveling-in-philippines" }}
       />
 
-      {/* Highlights */}
-      <section className="relative z-10 -mt-6">
+      {/* Quick facts strip */}
+      <section className="bg-[#141837] text-white">
         <Container>
-          <ul className="grid grid-cols-2 overflow-hidden rounded-2xl border border-primary/15 bg-white shadow-card-hover lg:grid-cols-4">
-            {highlights.map((item, i) => (
-              <li
-                key={item.label}
-                className={`flex items-center gap-3 px-5 py-5 ${
-                  i > 0 ? "border-t border-line sm:border-t-0 sm:border-l" : ""
-                } ${i === 2 ? "border-t lg:border-t-0" : ""}`}
-              >
-                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
-                  <Icon name={item.icon} size={18} />
-                </span>
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-muted">
-                    {item.label}
-                  </p>
-                  <p className="font-heading text-base font-semibold text-ink">{item.value}</p>
-                </div>
+          <ul className="grid grid-cols-2 divide-y divide-white/10 sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+            {facts.map((fact) => (
+              <li key={fact.label} className="px-4 py-6 text-center md:py-8">
+                <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.16em] text-flag-yellow">
+                  {fact.label}
+                </p>
+                <p className="mt-2 font-heading text-xl font-semibold md:text-2xl">{fact.value}</p>
               </li>
             ))}
           </ul>
         </Container>
       </section>
 
-      {/* Intro */}
-      <section className="py-10 md:py-12">
+      {/* Invitation */}
+      <section className="relative overflow-hidden bg-white py-16 md:py-20">
         <Container>
-          <div className="grid gap-6 overflow-hidden rounded-2xl border border-primary/10 bg-white shadow-card lg:grid-cols-[1.25fr_0.75fr]">
-            <div className="p-6 md:p-8">
-              <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
-                Republic of the Philippines
-              </p>
-              <h2 className="mt-2 font-heading text-xl font-semibold text-ink md:text-2xl">
-                A nation of islands, cultures, and connections
-              </h2>
-              <div className="mt-4 space-y-4 text-[15px] leading-[1.75] text-ink-soft">
-                <p>
-                  The Philippines stretches from south of China to the northern tip of Borneo. Its
-                  national life blends indigenous Malay culture with Spanish and American influences —
-                  visible in language, faith, food, and everyday life.
-                </p>
-                <p>
-                  Explore the topics below for a country overview, economy, foreign and trade policy,
-                  and a directory of useful information.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center gap-3 bg-primary px-6 py-7 text-white md:px-8">
-              <p className="font-heading text-sm font-semibold text-flag-yellow">Start here</p>
-              <ButtonLink href={featured.href} variant="onDark" className="justify-between">
-                Philippines at a Glance
-                <Icon name="arrowRight" size={15} />
-              </ButtonLink>
-              <ButtonLink href="/traveling-in-philippines" variant="ghostDark" className="justify-between">
-                Plan a visit
-                <Icon name="arrowRight" size={15} />
-              </ButtonLink>
-              <ButtonLink href="/study-in-philippines" variant="ghostDark" className="justify-between">
-                Study options
-                <Icon name="arrowRight" size={15} />
-              </ButtonLink>
-            </div>
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              Republic of the Philippines
+            </p>
+            <h2 className="mt-4 font-heading text-3xl font-semibold leading-tight text-ink md:text-4xl">
+              Islands, cultures, and warm hospitality
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-ink-soft md:text-lg">
+              National life blends indigenous Malay culture with Spanish and American influences —
+              visible in language, faith, food, and everyday life. Explore the country overview,
+              economy, and policy topics below.
+            </p>
           </div>
         </Container>
       </section>
 
+      {/* Visual story panels */}
+      <section className="bg-white">
+        {moments.map((moment, i) => (
+          <div
+            key={moment.title}
+            className={`grid lg:grid-cols-2 ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}
+          >
+            <div className="relative min-h-[18rem] md:min-h-[24rem]">
+              <Image
+                src={moment.image}
+                alt={moment.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+              />
+            </div>
+            <div
+              className={`flex flex-col justify-center px-8 py-12 md:px-14 md:py-16 ${
+                i % 2 === 0 ? "bg-primary-50" : "bg-[#141837] text-white"
+              }`}
+            >
+              <p
+                className={`font-heading text-[11px] font-semibold uppercase tracking-[0.16em] ${
+                  i % 2 === 0 ? "text-primary" : "text-flag-yellow"
+                }`}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-3 font-heading text-2xl font-semibold md:text-3xl">{moment.title}</h3>
+              <p
+                className={`mt-4 max-w-md text-[15px] leading-relaxed ${
+                  i % 2 === 0 ? "text-ink-soft" : "text-white/78"
+                }`}
+              >
+                {moment.text}
+              </p>
+            </div>
+          </div>
+        ))}
+      </section>
+
       {/* Topics */}
-      <section className="bg-primary-50 py-14 md:py-16">
+      <section className="bg-surface-muted py-16 md:py-20">
         <Container>
-          <div className="mb-8 max-w-2xl md:mb-10">
-            <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
+          <div className="mb-10 max-w-2xl">
+            <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
               Explore topics
             </p>
-            <h2 className="mt-1 font-heading text-2xl font-semibold text-primary md:text-[1.75rem]">
-              Learn about the Philippines
+            <h2 className="mt-2 font-heading text-3xl font-semibold text-ink md:text-[2.15rem]">
+              Learn more about the Philippines
             </h2>
-            <p className="mt-2 text-[15px] text-ink-muted">
-              Choose a topic for country facts, economic context, and policy information.
-            </p>
           </div>
 
           <Link
             href={featured.href}
-            className="group mb-5 flex flex-col gap-6 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#3a3eab_0%,#2e3192_55%,#1f2150_100%)] p-6 text-white shadow-card-hover transition-transform duration-300 hover:-translate-y-0.5 md:flex-row md:items-center md:justify-between md:p-8"
+            className="group relative mb-4 block overflow-hidden"
           >
-            <div className="flex items-start gap-4 md:items-center">
-              <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-flag-yellow text-ink">
-                <Icon name={featured.icon} size={28} />
-              </span>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-flag-yellow">
-                  Best place to begin
-                </p>
-                <h3 className="mt-1 font-heading text-xl font-semibold md:text-2xl">
-                  {featured.title}
-                </h3>
-                <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/80">
-                  {featured.description}
-                </p>
+            <div className="relative min-h-[14rem] md:min-h-[16rem]">
+              <Image
+                src="/philippines/mayon.jpg"
+                alt=""
+                fill
+                sizes="100vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[linear-gradient(115deg,rgba(46,49,146,0.88),rgba(20,24,55,0.65))]"
+              />
+              <div className="absolute inset-0 flex flex-col justify-end p-6 md:flex-row md:items-end md:justify-between md:p-10">
+                <div className="max-w-xl text-white">
+                  <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.16em] text-flag-yellow">
+                    Best place to begin
+                  </p>
+                  <h3 className="mt-2 font-heading text-2xl font-semibold md:text-3xl">
+                    {featured.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/80 md:text-base">
+                    {featured.description}
+                  </p>
+                </div>
+                <span className="mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-primary transition-colors group-hover:bg-flag-yellow md:mt-0">
+                  Read overview
+                  <Icon name="arrowRight" size={15} />
+                </span>
               </div>
             </div>
-            <span className="inline-flex items-center gap-2 self-start rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-primary transition-colors group-hover:bg-flag-yellow md:self-center">
-              Read overview
-              <Icon name="arrowRight" size={16} />
-            </span>
           </Link>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <ul className="grid gap-px overflow-hidden bg-line sm:grid-cols-2">
             {rest.map((topic) => (
-              <Link
-                key={topic.href}
-                href={topic.href}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-primary/10 bg-white p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-card-hover md:p-6"
-              >
-                <div aria-hidden className={`absolute inset-x-0 top-0 h-1.5 ${topic.accent}`} />
-                <span
-                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl text-white ${topic.accent}`}
-                >
-                  <Icon name={topic.icon} size={20} />
-                </span>
-                <h3 className="mt-4 font-heading text-lg font-semibold text-ink group-hover:text-primary">
-                  {topic.title}
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
-                  {topic.description}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                  Open topic
-                  <Icon
-                    name="arrowRight"
-                    size={14}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Related */}
-      <section className="bg-white py-14 md:py-16">
-        <Container>
-          <div className="mb-8 max-w-2xl">
-            <h2 className="font-heading text-2xl font-semibold text-primary md:text-[1.75rem]">
-              Related next steps
-            </h2>
-            <p className="mt-2 text-[15px] text-ink-muted">
-              Planning to visit, study, or apply for a visa? Continue here.
-            </p>
-          </div>
-          <ul className="grid gap-4 md:grid-cols-3">
-            {related.map((item) => (
-              <li key={item.href}>
+              <li key={topic.href} className="bg-white">
                 <Link
-                  href={item.href}
-                  className="group flex h-full flex-col rounded-2xl border border-primary/10 bg-primary-50 p-5 transition-colors hover:bg-primary hover:text-white md:p-6"
+                  href={topic.href}
+                  className="group flex h-full flex-col justify-between px-6 py-7 transition-colors hover:bg-primary hover:text-white md:px-8 md:py-8"
                 >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white transition-colors group-hover:bg-white group-hover:text-primary">
-                    <Icon name={item.icon} size={18} />
-                  </span>
-                  <h3 className="mt-4 font-heading text-base font-semibold">{item.title}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted group-hover:text-white/80">
-                    {item.description}
-                  </p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:text-flag-yellow">
-                    Explore
-                    <Icon name="arrowRight" size={14} />
+                  <div>
+                    <h3 className="font-heading text-xl font-semibold">{topic.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-muted group-hover:text-white/75">
+                      {topic.description}
+                    </p>
+                  </div>
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:text-flag-yellow">
+                    Open topic
+                    <Icon
+                      name="arrowRight"
+                      size={14}
+                      className="transition-transform group-hover:translate-x-0.5"
+                    />
                   </span>
                 </Link>
               </li>
@@ -281,25 +241,58 @@ export default function AboutPhilippinesPage() {
         </Container>
       </section>
 
-      {/* Help */}
-      <section className="bg-primary-50 pb-14 pt-2 md:pb-16">
+      {/* Closing CTA */}
+      <section className="relative overflow-hidden py-20 text-white md:py-24">
+        <Image
+          src="/philippines/lagoon.jpg"
+          alt="Philippine lagoon landscape"
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(135deg,rgba(46,49,146,0.9),rgba(20,24,55,0.82))]"
+        />
+        <Container className="relative text-center">
+          <h2 className="font-heading text-3xl font-semibold md:text-4xl">
+            Ready to visit or study?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-white/80">
+            Continue to travel highlights, universities, or visa guidance — or contact the Consulate
+            in Kathmandu.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <ButtonLink href="/traveling-in-philippines" variant="onDark">
+              Traveling in Philippines
+              <Icon name="arrowRight" size={15} />
+            </ButtonLink>
+            <ButtonLink href="/study-in-philippines" variant="ghostDark">
+              Study options
+            </ButtonLink>
+            <ButtonLink href="/visa-migration" variant="ghostDark">
+              Visa & Migration
+            </ButtonLink>
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-white py-10">
         <Container>
-          <div className="flex flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#2e3192,#1f2150)] px-6 py-8 text-white md:flex-row md:items-center md:px-8">
-            <div>
-              <h2 className="font-heading text-xl font-semibold">Questions about the Philippines?</h2>
-              <p className="mt-1.5 max-w-lg text-sm text-white/75">
-                The Consulate General in Kathmandu can help with visas, travel guidance, and
-                general information.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <ButtonLink href="/contact" variant="onDark">
-                Contact us
-              </ButtonLink>
-              <ButtonLink href="/visa-migration" variant="ghostDark">
-                Visa & Migration
-              </ButtonLink>
-            </div>
+          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-8">
+            <p className="text-sm text-ink-muted">
+              Questions about the Philippines?{" "}
+              <Link href="/contact" className="font-semibold text-primary hover:underline">
+                Contact the Consulate
+              </Link>
+            </p>
+            <Link
+              href="/about-nepal"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+            >
+              About Nepal
+              <Icon name="arrowRight" size={14} />
+            </Link>
           </div>
         </Container>
       </section>

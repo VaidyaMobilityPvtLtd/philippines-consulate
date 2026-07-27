@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionHub } from "@/components/page/SectionHub";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: "Traveling in Philippines",
@@ -17,6 +18,8 @@ export default function TravelingInPhilippinesPage() {
         { label: "Home", href: "/" },
         { label: "Traveling in Philippines", href: "/traveling-in-philippines" },
       ]}
+      imageSrc={heroImages.travelPh.src}
+      imageAlt={heroImages.travelPh.alt}
       highlights={[
         { label: "Destinations", value: "8 anchor highlights", icon: "mapPin" },
         { label: "Climate", value: "Tropical year-round", icon: "globe" },

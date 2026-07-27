@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionHub } from "@/components/page/SectionHub";
+import { heroImages } from "@/lib/hero-images";
 
 export const metadata: Metadata = {
   title: "Passport Services",
@@ -17,6 +18,8 @@ export default function PassportServicePage() {
         { label: "Home", href: "/" },
         { label: "Passport Services", href: "/passport-service" },
       ]}
+      imageSrc={heroImages.passport.src}
+      imageAlt={heroImages.passport.alt}
       highlights={[
         { label: "Services", value: "4 passport topics", icon: "passport" },
         { label: "Where", value: "Consulate · Kathmandu", icon: "mapPin" },

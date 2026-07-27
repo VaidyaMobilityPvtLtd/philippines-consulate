@@ -10,6 +10,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/icons";
 import { getSectionPage } from "@/content/registry";
 import { findSection } from "./sections";
+import { heroImageForPath } from "./hero-images";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -73,6 +74,7 @@ export function buildSectionSubPage(sectionHref: string) {
       { href: "/contact", label: "Contact the Consulate" },
       { href: "/downloads", label: "Forms & downloads" },
     ];
+    const heroImage = heroImageForPath(sectionHref);
 
     return (
       <>
@@ -85,6 +87,8 @@ export function buildSectionSubPage(sectionHref: string) {
             { label: section.label, href: section.href },
             { label: child.label, href: child.href },
           ]}
+          imageSrc={heroImage.src}
+          imageAlt={heroImage.alt}
         />
 
         <section className="bg-linear-to-b from-primary-50/80 to-white py-8 md:py-10">
