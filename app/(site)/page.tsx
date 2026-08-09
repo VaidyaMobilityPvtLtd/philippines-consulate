@@ -84,7 +84,7 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate flex min-h-[calc(100svh-6rem)] flex-col overflow-hidden bg-[#0b0f2a] text-white sm:min-h-[calc(100svh-4.5rem)] xl:min-h-[calc(100svh-8rem)]">
+      <section className="relative isolate flex min-h-[min(100svh,52rem)] flex-col overflow-hidden bg-[#0b0f2a] text-white sm:min-h-[calc(100svh-4.5rem)] xl:min-h-[calc(100svh-8rem)]">
         <Image
           src={heroImages.home.src}
           alt={heroImages.home.alt}
@@ -99,26 +99,26 @@ export default async function HomePage() {
           className="absolute inset-0 bg-[linear-gradient(115deg,rgba(12,16,42,0.78)_0%,rgba(46,49,146,0.52)_48%,rgba(12,16,42,0.38)_100%)]"
         />
 
-        <Container className="relative grid flex-1 items-center gap-10 pb-20 pt-16 md:pb-24 md:pt-20 lg:grid-cols-[1.2fr_0.9fr] lg:gap-12">
-          <div className="max-w-2xl">
-            <p className="inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-2xl border border-white/20 bg-black/30 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-flag-yellow backdrop-blur-[2px] sm:rounded-full sm:text-[11px] sm:tracking-[0.14em]">
-              <span className="h-1.5 w-1.5 rounded-full bg-flag-yellow" />
+        <Container className="relative grid flex-1 items-center gap-8 pb-14 pt-12 sm:gap-10 sm:pb-20 sm:pt-16 md:pb-24 md:pt-20 lg:grid-cols-[1.2fr_0.9fr] lg:gap-12">
+          <div className="max-w-2xl min-w-0">
+            <p className="inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-2xl border border-white/20 bg-black/30 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-flag-yellow backdrop-blur-[2px] sm:rounded-full sm:tracking-[0.14em]">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-flag-yellow" />
               {homeHero.eyelet}
             </p>
 
-            <h1 className="home-fade-up home-fade-up-delay-1 mt-5 font-heading text-[2.35rem] font-semibold leading-[1.08] tracking-[-0.02em] drop-shadow-[0_2px_18px_rgba(0,0,0,0.4)] md:text-5xl lg:text-[3.2rem]">
+            <h1 className="home-fade-up home-fade-up-delay-1 mt-4 font-heading text-[2.1rem] font-semibold leading-[1.08] tracking-[-0.02em] drop-shadow-[0_2px_18px_rgba(0,0,0,0.4)] sm:mt-5 sm:text-[2.35rem] md:text-5xl lg:text-[3.2rem]">
               {homeHero.title}
             </h1>
 
-            <p className="home-fade-up home-fade-up-delay-2 mt-5 max-w-xl text-base leading-relaxed text-white/90 md:text-lg">
+            <p className="home-fade-up home-fade-up-delay-2 mt-4 max-w-xl text-[15px] leading-relaxed text-white/90 sm:mt-5 sm:text-base md:text-lg">
               {homeHero.subtitle}
             </p>
 
-            <div className="home-fade-up home-fade-up-delay-3 mt-8 flex flex-wrap gap-3">
+            <div className="home-fade-up home-fade-up-delay-3 mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
               <ButtonLink
                 href={homeHero.primaryCta.href}
                 variant="onDark"
-                className="rounded-full px-6 py-3"
+                className="w-full rounded-full px-6 py-3 sm:w-auto"
               >
                 {homeHero.primaryCta.label}
                 <Icon name="arrowRight" size={16} />
@@ -126,37 +126,37 @@ export default async function HomePage() {
               <ButtonLink
                 href={homeHero.secondaryCta.href}
                 variant="ghostDark"
-                className="rounded-full px-6 py-3"
+                className="w-full rounded-full px-6 py-3 sm:w-auto"
               >
                 {homeHero.secondaryCta.label}
               </ButtonLink>
             </div>
 
-            <dl className="home-fade-up home-fade-up-delay-3 mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-white/20 pt-6">
-              <div>
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55">
+            <dl className="home-fade-up home-fade-up-delay-3 mt-8 grid max-w-lg grid-cols-3 gap-3 border-t border-white/20 pt-5 sm:mt-10 sm:gap-4 sm:pt-6">
+              <div className="min-w-0">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/55">
                   Location
                 </dt>
-                <dd className="mt-1 font-heading text-sm font-semibold">Kathmandu</dd>
+                <dd className="mt-1 font-heading text-[13px] font-semibold sm:text-sm">Kathmandu</dd>
               </div>
-              <div>
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55">
+              <div className="min-w-0">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/55">
                   Hours
                 </dt>
-                <dd className="mt-1 font-heading text-sm font-semibold">Mon–Fri</dd>
+                <dd className="mt-1 font-heading text-[13px] font-semibold sm:text-sm">Mon–Fri</dd>
               </div>
-              <div>
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55">
+              <div className="min-w-0">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/55">
                   Focus
                 </dt>
-                <dd className="mt-1 font-heading text-sm font-semibold">PH · Nepal</dd>
+                <dd className="mt-1 font-heading text-[13px] font-semibold sm:text-sm">PH · Nepal</dd>
               </div>
             </dl>
           </div>
 
           {/* Popular services panel */}
-          <div>
-            <div className="rounded-3xl border border-white/25 bg-[rgba(16,20,52,0.5)] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.3)] backdrop-blur-xl backdrop-saturate-150 md:p-6">
+          <div className="min-w-0">
+            <div className="rounded-2xl border border-white/25 bg-[rgba(16,20,52,0.5)] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.3)] backdrop-blur-xl backdrop-saturate-150 sm:rounded-3xl sm:p-5 md:p-6">
               <div className="mb-5 flex items-center gap-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -254,19 +254,19 @@ export default async function HomePage() {
                     />
                     <div aria-hidden className={`absolute inset-x-0 top-0 h-1.5 ${accent}`} />
                   </div>
-                  <div className="flex flex-1 flex-col px-7 pb-8">
+                  <div className="flex flex-1 flex-col px-5 pb-6 sm:px-7 sm:pb-8">
                     <span
-                      className={`relative -mt-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl shadow-card ring-4 ring-white transition-all duration-300 group-hover:bg-primary group-hover:text-white ${iconSoft}`}
+                      className={`relative -mt-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl shadow-card ring-4 ring-white transition-all duration-300 group-hover:bg-primary group-hover:text-white sm:h-16 sm:w-16 ${iconSoft}`}
                     >
                       <Icon name={link.icon} size={26} />
                     </span>
-                    <h3 className="mt-5 font-heading text-xl font-semibold text-ink group-hover:text-primary">
+                    <h3 className="mt-4 font-heading text-lg font-semibold text-ink group-hover:text-primary sm:mt-5 sm:text-xl">
                       {link.title}
                     </h3>
-                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-muted">
+                    <p className="mt-2.5 flex-1 text-[15px] leading-relaxed text-ink-muted sm:mt-3">
                       {link.description}
                     </p>
-                    <span className="mt-6 flex items-center gap-1.5 border-t border-line pt-5 text-sm font-semibold text-primary">
+                    <span className="mt-5 flex items-center gap-1.5 border-t border-line pt-4 text-sm font-semibold text-primary sm:mt-6 sm:pt-5">
                       Learn more
                       <Icon
                         name="arrowRight"
@@ -536,11 +536,11 @@ export default async function HomePage() {
       {/* Contact CTA */}
       <section className="bg-primary-50 pb-16 pt-4 md:pb-24">
         <Container>
-          <div className="rounded-2xl bg-[linear-gradient(135deg,#32359e_0%,#2e3192_55%,#252873_100%)] px-6 py-12 text-center text-white md:px-12 md:py-14">
+          <div className="rounded-2xl bg-[linear-gradient(135deg,#32359e_0%,#2e3192_55%,#252873_100%)] px-5 py-10 text-center text-white sm:px-6 sm:py-12 md:px-12 md:py-14">
             <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.16em] text-flag-yellow">
               We are here to help
             </p>
-            <h2 className="mt-3 font-heading text-2xl font-semibold md:text-[2rem]">
+            <h2 className="mt-3 font-heading text-[1.65rem] font-semibold sm:text-2xl md:text-[2rem]">
               Need consular assistance?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-white/80">
@@ -548,34 +548,45 @@ export default async function HomePage() {
               other consular support.
             </p>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <ButtonLink href="/contact" variant="onDark" className="rounded-full px-6 py-3">
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
+              <ButtonLink
+                href="/contact"
+                variant="onDark"
+                className="w-full rounded-full px-6 py-3 sm:w-auto"
+              >
                 Contact the Consulate
               </ButtonLink>
-              <ButtonLink href="/downloads" variant="ghostDark" className="rounded-full px-6 py-3">
+              <ButtonLink
+                href="/downloads"
+                variant="ghostDark"
+                className="w-full rounded-full px-6 py-3 sm:w-auto"
+              >
                 Forms & downloads
                 <Icon name="arrowRight" size={16} />
               </ButtonLink>
             </div>
 
-            <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/15 pt-6 text-sm text-white/80">
-              <li>
-                <Link href="tel:+97714008801" className="flex items-center gap-2 hover:text-white">
-                  <Icon name="phone" size={15} className="text-flag-yellow" />
+            <ul className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-white/15 pt-6 text-sm text-white/80 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-3">
+              <li className="min-w-0 max-w-full">
+                <Link
+                  href="tel:+97714008801"
+                  className="flex items-center justify-center gap-2 break-words hover:text-white"
+                >
+                  <Icon name="phone" size={15} className="shrink-0 text-flag-yellow" />
                   {site.contact.phone}
                 </Link>
               </li>
-              <li>
+              <li className="min-w-0 max-w-full">
                 <Link
                   href={`mailto:${site.contact.email}`}
-                  className="flex items-center gap-2 hover:text-white"
+                  className="flex items-center justify-center gap-2 break-all hover:text-white"
                 >
-                  <Icon name="mail" size={15} className="text-flag-yellow" />
+                  <Icon name="mail" size={15} className="shrink-0 text-flag-yellow" />
                   {site.contact.email}
                 </Link>
               </li>
-              <li className="flex items-center gap-2">
-                <Icon name="clock" size={15} className="text-flag-yellow" />
+              <li className="flex items-center justify-center gap-2">
+                <Icon name="clock" size={15} className="shrink-0 text-flag-yellow" />
                 Mon – Fri, 9:00 AM – 3:00 PM
               </li>
             </ul>

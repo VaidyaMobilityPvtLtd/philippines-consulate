@@ -114,7 +114,7 @@ export function SectionHub({
             <ul
               className={`grid overflow-hidden rounded-2xl border border-primary/15 bg-white shadow-card-hover ${
                 highlights.length >= 4
-                  ? "grid-cols-2 lg:grid-cols-4"
+                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
                   : highlights.length === 3
                     ? "grid-cols-1 sm:grid-cols-3"
                     : "grid-cols-1 sm:grid-cols-2"
@@ -123,18 +123,20 @@ export function SectionHub({
               {highlights.map((item, i) => (
                 <li
                   key={item.label}
-                  className={`flex items-center gap-3 px-5 py-5 ${
+                  className={`flex min-w-0 items-center gap-3 px-4 py-4 sm:px-5 sm:py-5 ${
                     i > 0 ? "border-t border-line sm:border-t-0 sm:border-l" : ""
                   }`}
                 >
                   <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
                     <Icon name={item.icon} size={18} />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-muted">
                       {item.label}
                     </p>
-                    <p className="font-heading text-base font-semibold text-ink">{item.value}</p>
+                    <p className="font-heading text-[15px] font-semibold text-ink sm:text-base">
+                      {item.value}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -314,17 +316,18 @@ export function SectionHub({
 
       <section className="bg-primary-50 pb-14 pt-2 md:pb-16">
         <Container>
-          <div className="flex flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#2e3192,#1f2150)] px-6 py-8 text-white md:flex-row md:items-center md:px-8">
-            <div>
+          <div className="flex flex-col items-stretch justify-between gap-5 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#2e3192,#1f2150)] px-5 py-7 text-white sm:items-start sm:gap-6 sm:px-6 sm:py-8 md:flex-row md:items-center md:px-8">
+            <div className="min-w-0">
               <h2 className="font-heading text-xl font-semibold">{helpTitle}</h2>
               <p className="mt-1.5 max-w-lg text-sm text-white/75">{helpBody}</p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
               {helpActions.map((action) => (
                 <ButtonLink
                   key={action.href + action.label}
                   href={action.href}
                   variant={action.variant ?? "onDark"}
+                  className="w-full sm:w-auto"
                 >
                   {action.label}
                 </ButtonLink>

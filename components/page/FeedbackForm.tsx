@@ -89,7 +89,7 @@ export function FeedbackForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8"
+      className="rounded-2xl border border-line bg-surface p-5 shadow-card sm:p-6 md:p-8"
     >
       {error ? (
         <div
@@ -163,7 +163,7 @@ export function FeedbackForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {pending ? "Submitting…" : "Submit feedback"}
         <Icon name="arrowRight" size={16} />

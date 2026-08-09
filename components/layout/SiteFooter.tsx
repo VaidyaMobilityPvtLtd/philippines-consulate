@@ -9,38 +9,49 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-auto bg-primary-dark text-white/80">
-      <Container className="py-14">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <Container className="py-10 md:py-14">
+        <div className="grid gap-9 sm:gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Identity + contact */}
-          <div>
-            <div className="flex items-center gap-3">
+          <div className="min-w-0">
+            <div className="flex items-start gap-3 sm:items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.svg" alt="" width={48} height={53} className="object-contain" />
-              <div className="leading-tight">
-                <p className="font-heading text-base font-semibold text-white">{site.name}</p>
+              <img
+                src="/logo.svg"
+                alt=""
+                width={48}
+                height={53}
+                className="h-auto w-12 shrink-0 object-contain"
+              />
+              <div className="min-w-0 leading-tight">
+                <p className="font-heading text-[15px] font-semibold text-white sm:text-base">
+                  {site.name}
+                </p>
                 <p className="text-xs uppercase tracking-wider text-white/60">{site.location}</p>
               </div>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">{site.tagline}</p>
 
-            <ul className="mt-5 space-y-2 text-sm">
+            <ul className="mt-5 space-y-2.5 text-sm">
               <li className="flex items-start gap-2.5">
                 <Icon name="mapPin" size={16} className="mt-0.5 shrink-0 text-white/50" />
-                <span>{site.contact.address}</span>
+                <span className="min-w-0 break-words">{site.contact.address}</span>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Icon name="phone" size={16} className="shrink-0 text-white/50" />
-                <span>{site.contact.phone}</span>
+              <li className="flex items-start gap-2.5 sm:items-center">
+                <Icon name="phone" size={16} className="mt-0.5 shrink-0 text-white/50 sm:mt-0" />
+                <span className="min-w-0 break-words">{site.contact.phone}</span>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Icon name="mail" size={16} className="shrink-0 text-white/50" />
-                <a href={`mailto:${site.contact.email}`} className="hover:text-white">
+              <li className="flex items-start gap-2.5 sm:items-center">
+                <Icon name="mail" size={16} className="mt-0.5 shrink-0 text-white/50 sm:mt-0" />
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className="min-w-0 break-words hover:text-white"
+                >
                   {site.contact.email}
                 </a>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Icon name="clock" size={16} className="shrink-0 text-white/50" />
-                <span>{site.contact.hours}</span>
+              <li className="flex items-start gap-2.5 sm:items-center">
+                <Icon name="clock" size={16} className="mt-0.5 shrink-0 text-white/50 sm:mt-0" />
+                <span className="min-w-0 break-words">{site.contact.hours}</span>
               </li>
             </ul>
           </div>

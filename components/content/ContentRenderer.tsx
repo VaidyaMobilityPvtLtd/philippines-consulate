@@ -53,7 +53,7 @@ function Block({ block }: { block: ContentBlock }) {
     case "table":
       return (
         <div className="overflow-x-auto rounded-2xl border border-primary/15 shadow-sm">
-          <table className="w-full min-w-130 border-collapse text-sm">
+          <table className="w-full min-w-[20rem] border-collapse text-sm sm:min-w-130">
             <thead>
               <tr className="bg-primary text-left">
                 {block.headers.map((h, i) => (

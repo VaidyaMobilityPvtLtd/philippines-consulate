@@ -119,7 +119,7 @@ function MobileNavItem({
           href={item.href}
           onClick={onNavigate}
           className={cn(
-            "flex-1 py-3 font-heading text-[15px] font-medium",
+            "min-w-0 flex-1 py-3.5 font-heading text-[15px] font-medium",
             active ? "text-white" : "text-white/82",
           )}
         >
@@ -131,7 +131,7 @@ function MobileNavItem({
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={`Toggle ${item.label} submenu`}
-            className="p-3 text-white/70 hover:bg-white/10"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center text-white/70 hover:bg-white/10"
           >
             <Icon name="chevronDown" size={18} className={cn("transition-transform", open && "rotate-180")} />
           </button>
@@ -144,7 +144,7 @@ function MobileNavItem({
               <Link
                 href={child.href}
                 onClick={onNavigate}
-                className="block py-2 pl-4 text-sm text-white/72 transition-colors hover:bg-white/8 hover:text-white"
+                className="block py-2.5 pl-4 text-[15px] text-white/72 transition-colors hover:bg-white/8 hover:text-white"
               >
                 {child.label}
               </Link>
@@ -162,9 +162,9 @@ export function MainNav() {
 
   return (
     <div className="bg-primary text-white">
-      <Container className="flex items-stretch justify-between">
+      <Container className="flex min-h-12 items-stretch justify-between gap-3 xl:min-h-0">
         {/* Compact logo (below xl, where the top bar is hidden) */}
-        <Logo variant="onDark" showWordmark={false} size={36} className="py-2 xl:hidden" />
+        <Logo variant="onDark" showWordmark={false} size={36} className="shrink-0 py-2 xl:hidden" />
 
         {/* Desktop primary nav — evenly spans full width (aligns with Downloads) */}
         <nav aria-label="Primary navigation" className="hidden min-w-0 flex-1 xl:block">
@@ -187,7 +187,7 @@ export function MainNav() {
           onClick={() => setMobileOpen((v) => !v)}
           aria-expanded={mobileOpen}
           aria-label="Toggle menu"
-          className="p-2 text-white hover:bg-white/10 xl:hidden"
+          className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center text-white hover:bg-white/10 xl:hidden"
         >
           <Icon name={mobileOpen ? "close" : "menu"} size={24} />
         </button>
@@ -195,8 +195,8 @@ export function MainNav() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-t border-white/10 xl:hidden">
-          <Container className="pb-4 pt-4">
+        <div className="max-h-[calc(100dvh-7.5rem)] overflow-y-auto overscroll-contain border-t border-white/10 xl:hidden">
+          <Container className="pb-5 pt-4">
             <SearchBar className="mb-4 w-full" />
             <ul>
               {mainNav.map((item) => (
@@ -208,10 +208,14 @@ export function MainNav() {
                 />
               ))}
             </ul>
-            <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-heading text-[11px] font-bold uppercase tracking-[0.06em] text-white/68">
+            <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2.5 font-heading text-xs font-bold uppercase tracking-[0.06em] text-white/75">
               {utilityNav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} onClick={() => setMobileOpen(false)} className="hover:text-white">
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-flex min-h-9 items-center hover:text-white"
+                  >
                     {item.label}
                   </Link>
                 </li>

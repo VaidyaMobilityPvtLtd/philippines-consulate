@@ -54,10 +54,12 @@ export function SectionTopicNav({
           {next ? (
             <Link
               href={next.href}
-              className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-primary-dark"
+              className="inline-flex max-w-full items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-primary-dark"
             >
-              Next: {next.label.length > 28 ? `${next.label.slice(0, 28)}…` : next.label}
-              <Icon name="chevronRight" size={12} />
+              <span className="truncate">
+                Next: {next.label.length > 22 ? `${next.label.slice(0, 22)}…` : next.label}
+              </span>
+              <Icon name="chevronRight" size={12} className="shrink-0" />
             </Link>
           ) : (
             <Link
