@@ -52,27 +52,25 @@ export function PageHero({
           />
         </>
       )}
-      <Container className="relative flex min-h-[13.5rem] flex-col items-start justify-center py-8 md:min-h-[15rem] md:py-10">
+      <Container className="relative flex min-h-[11.5rem] flex-col items-start justify-center py-7 md:min-h-[15rem] md:py-10">
         {breadcrumb && breadcrumb.length > 0 ? (
-          <div className="mb-3 min-h-[1.25rem]">
+          <div className="mb-2.5 max-w-full md:mb-3">
             <Breadcrumb items={breadcrumb} onDark />
           </div>
-        ) : (
-          <div className="mb-3 min-h-[1.25rem]" aria-hidden />
-        )}
+        ) : null}
         {eyebrow ? (
-          <p className="w-fit rounded-full border border-flag-yellow/35 bg-black/25 px-3 py-1 font-heading text-[11px] font-semibold uppercase tracking-[0.14em] text-flag-yellow backdrop-blur-[2px]">
+          <p className="w-fit max-w-full rounded-full border border-flag-yellow/35 bg-black/25 px-3 py-1 font-heading text-[11px] font-semibold uppercase tracking-[0.14em] text-flag-yellow backdrop-blur-[2px]">
             {eyebrow}
           </p>
-        ) : (
-          <div className="h-[1.625rem]" aria-hidden />
-        )}
-        <h1 className="mt-3 line-clamp-2 max-w-3xl font-heading text-[1.85rem] font-semibold leading-tight tracking-[-0.01em] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] md:text-[2.25rem]">
+        ) : null}
+        <h1 className="mt-2.5 max-w-3xl font-heading text-[1.65rem] font-semibold leading-tight tracking-[-0.01em] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-[1.85rem] md:mt-3 md:text-[2.25rem]">
           {title}
         </h1>
-        <p className="mt-3 line-clamp-2 min-h-[3.4em] max-w-2xl text-[15px] leading-[1.7] text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.4)]">
-          {intro ?? ""}
-        </p>
+        {intro ? (
+          <p className="mt-2.5 max-w-2xl text-[15px] leading-[1.65] text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.4)] md:mt-3 md:leading-[1.7]">
+            {intro}
+          </p>
+        ) : null}
       </Container>
       <div
         aria-hidden

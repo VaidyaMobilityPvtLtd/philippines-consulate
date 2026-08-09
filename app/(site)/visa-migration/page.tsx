@@ -77,7 +77,7 @@ export default function VisaMigrationPage() {
                 >
                   <Link
                     href={item.href}
-                    className="group flex items-center gap-3 px-5 py-4 transition-colors hover:bg-primary-50"
+                    className="group flex min-h-14 items-center gap-3 px-4 py-3.5 transition-colors hover:bg-primary-50 sm:px-5 sm:py-4"
                   >
                     <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white transition-transform group-hover:scale-105">
                       <Icon name={item.icon} size={18} />

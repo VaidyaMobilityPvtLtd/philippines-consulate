@@ -16,16 +16,16 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "mb-8 md:mb-10",
+        "mb-6 md:mb-10",
         align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl",
         className,
       )}
     >
-      <h2 className="font-heading text-[1.5rem] font-semibold text-primary md:text-[1.75rem]">
+      <h2 className="font-heading text-[1.35rem] font-semibold text-primary sm:text-[1.5rem] md:text-[1.75rem]">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-2.5 text-[15px] leading-relaxed text-ink-muted">{subtitle}</p>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink-muted sm:mt-2.5">{subtitle}</p>
       )}
     </div>
   );
@@ -52,7 +52,7 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className={cn("py-12 md:py-16", muted && "bg-surface-muted", className)}>
+    <section id={id} className={cn("py-10 md:py-16", muted && "bg-surface-muted", className)}>
       <Container className={containerClassName}>
         {title && <SectionHeading title={title} subtitle={subtitle} align={headingAlign} />}
         {children}

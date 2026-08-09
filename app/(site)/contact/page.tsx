@@ -80,7 +80,7 @@ export default function ContactPage() {
               {...(action.external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="group flex items-center gap-3.5 rounded-2xl border border-line bg-surface p-4 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-card-hover"
+              className="group flex min-h-[4.25rem] items-center gap-3.5 rounded-2xl border border-line bg-surface p-4 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-card-hover"
             >
               <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-white transition-colors group-hover:bg-primary-dark">
                 <Icon name={action.icon} size={20} />
@@ -89,7 +89,9 @@ export default function ContactPage() {
                 <span className="block font-heading text-[15px] font-semibold text-ink group-hover:text-primary">
                   {action.label}
                 </span>
-                <span className="mt-0.5 block truncate text-xs text-ink-muted">{action.hint}</span>
+                <span className="mt-0.5 block break-words text-xs leading-snug text-ink-muted sm:truncate">
+                  {action.hint}
+                </span>
               </span>
             </a>
           ))}
@@ -118,12 +120,12 @@ export default function ContactPage() {
                           {...(item.href.startsWith("http")
                             ? { target: "_blank", rel: "noopener noreferrer" }
                             : {})}
-                          className="mt-0.5 block text-sm font-medium leading-relaxed text-ink hover:text-primary"
+                          className="mt-0.5 block break-words text-sm font-medium leading-relaxed text-ink hover:text-primary"
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <p className="mt-0.5 text-sm font-medium leading-relaxed text-ink">
+                        <p className="mt-0.5 break-words text-sm font-medium leading-relaxed text-ink">
                           {item.value}
                         </p>
                       )}

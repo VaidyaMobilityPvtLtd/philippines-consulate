@@ -48,26 +48,26 @@ export function AdminShell({
   return (
     <div className="min-h-screen bg-surface-muted">
       <header className="sticky top-0 z-40 border-b border-primary-dark/20 bg-primary text-white shadow-[0_1px_0_rgba(255,255,255,0.06)_inset]">
-        <Container className="flex items-center justify-between gap-4 py-3">
-          <div className="flex min-w-0 items-center gap-3">
+        <Container className="flex items-center justify-between gap-3 py-3 sm:gap-4">
+          <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.svg"
               alt=""
               width={34}
               height={38}
-              className="shrink-0 object-contain"
+              className="h-auto w-8 shrink-0 object-contain sm:w-[34px]"
             />
             <div className="min-w-0">
-              <p className="font-heading text-[15px] font-semibold tracking-wide">
+              <p className="font-heading text-sm font-semibold tracking-wide sm:text-[15px]">
                 Consulate Admin
               </p>
-              <p className="truncate text-xs text-white/70">
+              <p className="truncate text-[11px] text-white/70 sm:text-xs">
                 {demoMode ? "Demo mode · local data" : "Internal content & inbox tools"}
               </p>
             </div>
           </div>
-          <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <div className="hidden text-right sm:block">
               <p className="text-sm font-medium leading-tight text-white">{user.name}</p>
               <p className="text-xs text-white/65">{user.email}</p>
@@ -76,7 +76,7 @@ export function AdminShell({
               type="button"
               onClick={onLogout}
               disabled={loggingOut}
-              className="rounded-lg border border-white/25 bg-white/10 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-white/20 disabled:opacity-60"
+              className="rounded-lg border border-white/25 bg-white/10 px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-white/20 disabled:opacity-60 sm:px-3 sm:text-sm"
             >
               {loggingOut ? "Signing out…" : "Sign out"}
             </button>

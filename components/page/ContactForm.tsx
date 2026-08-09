@@ -69,7 +69,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8"
+      className="rounded-2xl border border-line bg-surface p-5 shadow-card sm:p-6 md:p-8"
       noValidate={false}
     >
       <div className="mb-6">
@@ -178,7 +178,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         >
           {pending ? "Sending…" : "Send message"}
           <Icon name="arrowRight" size={16} />

@@ -16,7 +16,7 @@ export function SearchBar({ className }: { className?: string }) {
       role="search"
       onSubmit={(e) => e.preventDefault()}
       className={cn(
-        "flex items-center gap-2 rounded-full border border-[#e8e8ee] bg-white px-3.5 py-1.5 text-sm shadow-[0_1px_3px_rgba(20,24,31,0.07)]",
+        "flex min-h-11 items-center gap-2 rounded-full border border-[#e8e8ee] bg-white px-3.5 py-2 text-sm shadow-[0_1px_3px_rgba(20,24,31,0.07)] xl:min-h-0 xl:py-1.5",
         className,
       )}
     >
