@@ -1,9 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { deleteAdminNews, formatApiError, updateAdminNews } from "@/lib/admin-api";
+import {
+  deleteAdminNews,
+  formatApiError,
+  listAdminNews,
+  updateAdminNews,
+} from "@/lib/admin-api";
 import type { NewsItem } from "@/lib/api-types";
 import { EmptyState, FlashMessage, StatusBadge } from "@/components/admin/ui";
 
@@ -15,12 +19,31 @@ function formatDate(iso: string) {
   });
 }
 
-export function NewsTable({ items }: { items: NewsItem[] }) {
-  const router = useRouter();
+export function NewsTable({
+  token,
+  initialItems,
+}: {
+  token?: string;
+  initialItems: NewsItem[];
+}) {
+  const [items, setItems] = useState<NewsItem[]>(initialItems);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const clearFlash = useCallback(() => setFlash(null), []);
+
+  const refresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      const { items: fresh } = await listAdminNews(token);
+      setItems(fresh);
+    } catch (err) {
+      setError(formatApiError(err));
+    } finally {
+      setRefreshing(false);
+    }
+  }, [token]);
 
   async function togglePublish(item: NewsItem) {
     setError(null);
@@ -28,7 +51,7 @@ export function NewsTable({ items }: { items: NewsItem[] }) {
     try {
       await updateAdminNews(item.id, { published: !item.published });
       setFlash(item.published ? "Unpublished." : "Published.");
-      router.refresh();
+      await refresh();
     } catch (err) {
       setError(formatApiError(err));
     } finally {
@@ -43,7 +66,7 @@ export function NewsTable({ items }: { items: NewsItem[] }) {
     try {
       await deleteAdminNews(item.id);
       setFlash("News item deleted.");
-      router.refresh();
+      await refresh();
     } catch (err) {
       setError(formatApiError(err));
     } finally {
@@ -159,6 +182,7 @@ export function NewsTable({ items }: { items: NewsItem[] }) {
           </div>
           <div className="border-t border-line bg-surface-muted/50 px-4 py-2 text-xs text-ink-muted">
             {items.length} item{items.length === 1 ? "" : "s"}
+            {refreshing ? " · refreshing…" : ""}
           </div>
         </div>
       )}

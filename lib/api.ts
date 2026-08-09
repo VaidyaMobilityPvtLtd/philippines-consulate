@@ -127,28 +127,29 @@ export async function fetchNewsBySlug(slug: string): Promise<{
 }
 
 export async function submitContact(input: CreateContactInput): Promise<void> {
-  if (!isApiEnabled()) {
-    // Local demo: accept the submission without contacting Express.
-    await new Promise((r) => setTimeout(r, 350));
-    void input;
-    return;
-  }
-  await request("/api/contact", {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+  const res = await fetch(`${baseUrl}/api/contact`, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
   });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new ApiError(res.status, errorData.error || "Failed to submit contact", errorData.details);
+  }
 }
 
 export async function submitFeedback(input: CreateFeedbackInput): Promise<void> {
-  if (!isApiEnabled()) {
-    await new Promise((r) => setTimeout(r, 350));
-    void input;
-    return;
-  }
-  await request("/api/feedback", {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+  const res = await fetch(`${baseUrl}/api/feedback`, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
   });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new ApiError(res.status, errorData.error || "Failed to submit feedback", errorData.details);
+  }
 }
 
 /** Format Zod flatten details from the API into a readable string. */

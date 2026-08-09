@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { AdminPageHeader } from "@/components/admin/ui";
-import {
-  loadAdminContacts,
-  loadAdminFeedback,
-  loadAdminNews,
-} from "@/lib/admin-data-server";
+
 import { isApiEnabled } from "@/lib/config";
+import { cookies } from "next/headers";
+import { listAdminContacts, listAdminFeedback, listAdminNews } from "@/lib/admin-api";
 
 function formatRelative(iso: string) {
   const date = new Date(iso);
@@ -16,25 +14,29 @@ function formatRelative(iso: string) {
   });
 }
 
+
+
 export default async function AdminDashboardPage() {
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("admin_token")?.value;
   const [newsItems, contactItems, feedbackItems] = await Promise.all([
-    loadAdminNews(),
-    loadAdminContacts(),
-    loadAdminFeedback(),
+    listAdminNews(adminToken),
+    listAdminContacts(adminToken),
+    listAdminFeedback(adminToken),
   ]);
 
-  const newsCount = newsItems.length;
-  const publishedCount = newsItems.filter((n) => n.published).length;
+  const newsCount = newsItems.items.length;
+  const publishedCount = newsItems.items.filter((n) => n.published).length;
   const draftCount = newsCount - publishedCount;
-  const contactNew = contactItems.filter((c) => c.status === "new").length;
-  const feedbackNew = feedbackItems.filter((f) => f.status === "new").length;
+  const contactNew = contactItems.items.filter((c) => c.status === "new").length;
+  const feedbackNew = feedbackItems.items.filter((f) => f.status === "new").length;
 
-  const recentNews = [...newsItems]
+  const recentNews = [...newsItems.items]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 4);
 
   const recentInbox = [
-    ...contactItems.map((c) => ({
+    ...contactItems.items.map((c) => ({
       id: `c-${c.id}`,
       kind: "Contact" as const,
       title: c.subject,
@@ -43,7 +45,7 @@ export default async function AdminDashboardPage() {
       status: c.status,
       href: "/admin/contact",
     })),
-    ...feedbackItems.map((f) => ({
+    ...feedbackItems.items.map((f) => ({
       id: `f-${f.id}`,
       kind: "Feedback" as const,
       title: f.subject || f.type || "Feedback",
@@ -66,14 +68,14 @@ export default async function AdminDashboardPage() {
     {
       label: "Contact — new",
       value: String(contactNew),
-      hint: `${contactItems.length} total submissions`,
+      hint: `${contactItems.items.length} total submissions`,
       href: "/admin/contact",
       emphasis: contactNew > 0,
     },
     {
       label: "Feedback — new",
       value: String(feedbackNew),
-      hint: `${feedbackItems.length} total submissions`,
+      hint: `${feedbackItems.items.length} total submissions`,
       href: "/admin/feedback",
       emphasis: feedbackNew > 0,
     },
@@ -112,9 +114,8 @@ export default async function AdminDashboardPage() {
                 {card.label}
               </p>
               <p
-                className={`mt-2 font-heading text-3xl font-semibold tracking-tight ${
-                  card.emphasis ? "text-primary" : "text-ink"
-                }`}
+                className={`mt-2 font-heading text-3xl font-semibold tracking-tight ${card.emphasis ? "text-primary" : "text-ink"
+                  }`}
               >
                 {card.value}
               </p>
@@ -139,6 +140,7 @@ export default async function AdminDashboardPage() {
               href="/admin/news"
               className="text-xs font-semibold text-primary hover:text-primary-dark"
             >
+
               View all
             </Link>
           </div>
@@ -165,11 +167,10 @@ export default async function AdminDashboardPage() {
                       </p>
                     </div>
                     <span
-                      className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${
-                        item.published
-                          ? "bg-primary-50 text-primary ring-1 ring-inset ring-primary-100"
-                          : "bg-surface-sunken text-ink-muted ring-1 ring-inset ring-line"
-                      }`}
+                      className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${item.published
+                        ? "bg-primary-50 text-primary ring-1 ring-inset ring-primary-100"
+                        : "bg-surface-sunken text-ink-muted ring-1 ring-inset ring-line"
+                        }`}
                     >
                       {item.published ? "Live" : "Draft"}
                     </span>
@@ -221,13 +222,12 @@ export default async function AdminDashboardPage() {
                       </p>
                     </div>
                     <span
-                      className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${
-                        item.status === "new"
-                          ? "bg-primary-50 text-primary ring-1 ring-inset ring-primary-100"
-                          : item.status === "read"
-                            ? "bg-surface-sunken text-ink-soft ring-1 ring-inset ring-line"
-                            : "bg-surface-muted text-ink-muted ring-1 ring-inset ring-line"
-                      }`}
+                      className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${item.status === "new"
+                        ? "bg-primary-50 text-primary ring-1 ring-inset ring-primary-100"
+                        : item.status === "read"
+                          ? "bg-surface-sunken text-ink-soft ring-1 ring-inset ring-line"
+                          : "bg-surface-muted text-ink-muted ring-1 ring-inset ring-line"
+                        }`}
                     >
                       {item.status}
                     </span>

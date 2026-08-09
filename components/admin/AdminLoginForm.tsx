@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatApiError, loginAdmin } from "@/lib/admin-api";
-import { MOCK_ADMIN_CREDENTIALS } from "@/lib/admin-mock";
+
 import { adminFieldClass, adminLabelClass } from "@/components/admin/ui";
 import { Container } from "@/components/ui/Container";
 
@@ -22,10 +22,15 @@ export function AdminLoginForm() {
 
     const data = new FormData(e.currentTarget);
     try {
-      await loginAdmin(
+      const res = await loginAdmin(
         String(data.get("email") ?? "").trim(),
         String(data.get("password") ?? ""),
       );
+
+      // Save token and user info in cookies separately
+      document.cookie = `admin_token=${res.token}; path=/; max-age=86400`;
+      document.cookie = `user=${encodeURIComponent(JSON.stringify(res.user))}; path=/; max-age=86400`;
+
       const next = searchParams.get("next");
       router.replace(next && next.startsWith("/admin") ? next : "/admin");
       router.refresh();
@@ -74,16 +79,7 @@ export function AdminLoginForm() {
           </div>
 
           <div className="rounded-2xl border border-line bg-surface p-6 shadow-card sm:p-8">
-            {showDemoHint ? (
-              <div className="mb-5 rounded-lg border border-primary-100 bg-primary-50 px-3.5 py-3 text-sm">
-                <p className="font-medium text-primary">Demo login (offline)</p>
-                <p className="mt-1 font-mono text-[13px] text-ink-soft">
-                  {MOCK_ADMIN_CREDENTIALS.email}
-                  <span className="mx-1.5 text-ink-muted">/</span>
-                  {MOCK_ADMIN_CREDENTIALS.password}
-                </p>
-              </div>
-            ) : null}
+
 
             {error ? (
               <div
@@ -105,7 +101,7 @@ export function AdminLoginForm() {
                   type="email"
                   required
                   autoComplete="username"
-                  defaultValue={showDemoHint ? MOCK_ADMIN_CREDENTIALS.email : undefined}
+
                   className={adminFieldClass}
                   placeholder="admin@consulate.local"
                 />
@@ -120,7 +116,7 @@ export function AdminLoginForm() {
                   type="password"
                   required
                   autoComplete="current-password"
-                  defaultValue={showDemoHint ? MOCK_ADMIN_CREDENTIALS.password : undefined}
+
                   className={adminFieldClass}
                 />
               </div>

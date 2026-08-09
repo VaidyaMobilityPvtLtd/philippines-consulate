@@ -22,16 +22,36 @@ async function parseJson<T>(res: Response): Promise<T> {
   }
 }
 
-async function adminFetch<T>(path: string, init?: RequestInit): Promise<T> {
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+function apiUrl(path: string) {
+  return `${baseUrl}${path}`;
+}
+
+// Browser-only fallback: reads the admin_token cookie set at login.
+// Returns undefined during SSR — server callers must pass a token explicitly.
+function getAdminToken(): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(/(?:^|;\s*)admin_token=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
+async function adminFetch<T>(
+  path: string,
+  init?: RequestInit,
+  token?: string,
+): Promise<T> {
+  const authToken = token ?? getAdminToken();
+
   let res: Response;
   try {
     res = await fetch(path, {
       ...init,
       headers: {
         "Content-Type": "application/json",
+        ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
         ...(init?.headers ?? {}),
       },
-      credentials: "same-origin",
     });
   } catch {
     throw new ApiError(0, "Unable to reach the admin API. Is the server running?");
@@ -51,68 +71,68 @@ async function adminFetch<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export async function loginAdmin(email: string, password: string) {
-  return adminFetch<{ user: AdminUser }>("/api/auth/login", {
+  return adminFetch<{ user: AdminUser; token: string }>(apiUrl("/api/auth/login"), {
     method: "POST",
     body: JSON.stringify({ email, password }),
   });
 }
 
-export async function logoutAdmin() {
-  return adminFetch<{ ok: boolean }>("/api/auth/logout", { method: "POST" });
+export async function logoutAdmin(token?: string) {
+  return adminFetch<{ ok: boolean }>(apiUrl("/api/auth/logout"), { method: "POST" }, token);
 }
 
-export async function fetchAdminMe() {
-  return adminFetch<{ user: AdminUser }>("/api/auth/me");
+export async function fetchAdminMe(token?: string) {
+  return adminFetch<{ user: AdminUser }>(apiUrl("/api/auth/me"), undefined, token);
 }
 
-export async function listAdminNews() {
-  return adminFetch<{ items: NewsItem[] }>("/api/admin/news");
+export async function listAdminNews(token?: string) {
+  return adminFetch<{ items: NewsItem[] }>(apiUrl("/api/admin/news"), undefined, token);
 }
 
-export async function createAdminNews(input: CreateNewsInput) {
-  return adminFetch<{ item: NewsItem }>("/api/admin/news", {
-    method: "POST",
-    body: JSON.stringify(input),
-  });
-}
-
-export async function updateAdminNews(id: string, input: UpdateNewsInput) {
-  return adminFetch<{ item: NewsItem }>(`/api/admin/news/${encodeURIComponent(id)}`, {
-    method: "PATCH",
-    body: JSON.stringify(input),
-  });
-}
-
-export async function deleteAdminNews(id: string) {
-  return adminFetch<void>(`/api/admin/news/${encodeURIComponent(id)}`, {
-    method: "DELETE",
-  });
-}
-
-export async function listAdminContacts() {
-  return adminFetch<{ items: ContactSubmission[] }>("/api/admin/contact");
-}
-
-export async function updateContactStatus(id: string, status: SubmissionStatus) {
-  return adminFetch<{ item: ContactSubmission }>(
-    `/api/admin/contact/${encodeURIComponent(id)}`,
-    {
-      method: "PATCH",
-      body: JSON.stringify({ status }),
-    },
+export async function createAdminNews(input: CreateNewsInput, token?: string) {
+  return adminFetch<{ item: NewsItem }>(
+    apiUrl("/api/admin/news"),
+    { method: "POST", body: JSON.stringify(input) },
+    token,
   );
 }
 
-export async function listAdminFeedback() {
-  return adminFetch<{ items: FeedbackSubmission[] }>("/api/admin/feedback");
+export async function updateAdminNews(id: string, input: UpdateNewsInput, token?: string) {
+  return adminFetch<{ item: NewsItem }>(
+    apiUrl(`/api/admin/news/${encodeURIComponent(id)}`),
+    { method: "PATCH", body: JSON.stringify(input) },
+    token,
+  );
 }
 
-export async function updateFeedbackStatus(id: string, status: SubmissionStatus) {
+export async function deleteAdminNews(id: string, token?: string) {
+  return adminFetch<void>(
+    apiUrl(`/api/admin/news/${encodeURIComponent(id)}`),
+    { method: "DELETE" },
+    token,
+  );
+}
+
+export async function listAdminContacts(token?: string) {
+  return adminFetch<{ items: ContactSubmission[] }>(apiUrl("/api/admin/contact"), undefined, token);
+}
+
+export async function updateContactStatus(id: string, status: SubmissionStatus, token?: string) {
+  return adminFetch<{ item: ContactSubmission }>(
+    apiUrl(`/api/admin/contact/${encodeURIComponent(id)}`),
+    { method: "PATCH", body: JSON.stringify({ status }) },
+    token,
+  );
+}
+
+export async function listAdminFeedback(token?: string) {
+  return adminFetch<{ items: FeedbackSubmission[] }>(apiUrl("/api/admin/feedback"), undefined, token);
+}
+
+export async function updateFeedbackStatus(id: string, status: SubmissionStatus, token?: string) {
   return adminFetch<{ item: FeedbackSubmission }>(
-    `/api/admin/feedback/${encodeURIComponent(id)}`,
-    {
-      method: "PATCH",
-      body: JSON.stringify({ status }),
-    },
+    apiUrl(`/api/admin/feedback/${encodeURIComponent(id)}`),
+    { method: "PATCH", body: JSON.stringify({ status }) },
+    token,
   );
 }

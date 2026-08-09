@@ -31,22 +31,35 @@ export function FeedbackForm() {
     const form = e.currentTarget;
     const data = new FormData(form);
 
+    const payload = {
+      firstName: String(data.get("firstName") ?? "").trim(),
+      lastName: optional(data.get("lastName")),
+      email: String(data.get("email") ?? "").trim(),
+      phone: optional(data.get("phone")),
+      city: optional(data.get("city")),
+      country: optional(data.get("country")),
+      subject: optional(data.get("subject")),
+      type: optional(data.get("type")) ?? "Suggestions",
+      message: optional(data.get("message")),
+    };
+
     try {
-      await submitFeedback({
-        firstName: String(data.get("firstName") ?? "").trim(),
-        lastName: optional(data.get("lastName")),
-        email: String(data.get("email") ?? "").trim(),
-        phone: optional(data.get("phone")),
-        city: optional(data.get("city")),
-        country: optional(data.get("country")),
-        subject: optional(data.get("subject")),
-        type: (optional(data.get("type")) as FeedbackType | undefined) ?? "Suggestions",
-        message: optional(data.get("message")),
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const res = await fetch(`${baseUrl}/api/feedback`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to submit feedback");
+      }
+
       form.reset();
       setSent(true);
-    } catch (err) {
-      setError(formatApiError(err));
+    } catch (err: any) {
+      setError(err.message || "Something went wrong. Please try again.");
     } finally {
       setPending(false);
     }

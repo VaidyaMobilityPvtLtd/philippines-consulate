@@ -1,10 +1,15 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { NewsTable } from "@/components/admin/NewsTable";
 import { AdminPageHeader } from "@/components/admin/ui";
-import { loadAdminNews } from "@/lib/admin-data-server";
+import { NewsItem } from "@/lib/api-types";
+import { listAdminNews } from "@/lib/admin-api";
 
 export default async function AdminNewsPage() {
-  const items = await loadAdminNews();
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("admin_token")?.value;
+
+  const { items } = await listAdminNews(adminToken);
 
   return (
     <div className="space-y-6">
@@ -20,7 +25,7 @@ export default async function AdminNewsPage() {
           </Link>
         }
       />
-      <NewsTable items={items} />
+      <NewsTable token={adminToken} initialItems={items} />
     </div>
   );
 }

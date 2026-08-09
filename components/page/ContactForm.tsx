@@ -27,19 +27,33 @@ export function ContactForm() {
     const data = new FormData(form);
 
     const phone = String(data.get("phone") ?? "").trim();
+    
+    const payload = {
+      name: String(data.get("name") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      ...(phone ? { phone } : {}),
+      topic: String(data.get("topic") ?? ""),
+      subject: String(data.get("subject") ?? "").trim(),
+      message: String(data.get("message") ?? "").trim(),
+    };
+
     try {
-      await submitContact({
-        name: String(data.get("name") ?? "").trim(),
-        email: String(data.get("email") ?? "").trim(),
-        ...(phone ? { phone } : {}),
-        topic: String(data.get("topic") ?? "") as ContactTopic,
-        subject: String(data.get("subject") ?? "").trim(),
-        message: String(data.get("message") ?? "").trim(),
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const res = await fetch(`${baseUrl}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to submit contact");
+      }
+
       form.reset();
       setSent(true);
-    } catch (err) {
-      setError(formatApiError(err));
+    } catch (err: any) {
+      setError(err.message || "Something went wrong. Please try again.");
     } finally {
       setPending(false);
     }

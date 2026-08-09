@@ -14,10 +14,6 @@ export function proxy(request: NextRequest) {
   }
 
   if (pathname === "/admin/login" || pathname.startsWith("/admin/login/")) {
-    const token = request.cookies.get(ADMIN_TOKEN_COOKIE)?.value;
-    if (token) {
-      return NextResponse.redirect(new URL("/admin", request.url));
-    }
     return NextResponse.next();
   }
 
