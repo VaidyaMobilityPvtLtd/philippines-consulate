@@ -1,18 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Icon } from "@/components/icons";
+import { formatApiError, submitFeedback } from "@/lib/api";
+import type { FeedbackType } from "@/lib/api-types";
 
 const inputClass =
   "w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15";
 const labelClass = "mb-1.5 block text-sm font-medium text-ink";
 
+function optional(value: FormDataEntryValue | null): string | undefined {
+  const trimmed = String(value ?? "").trim();
+  return trimmed || undefined;
+}
+
 /**
- * Visitor feedback form. Presentational for now — on submit it shows a
- * confirmation. Wire the handler to an API route / email service to go live.
+ * Visitor feedback form.
+ * Mock mode: local success UI only. API mode: POST /api/feedback on Express.
  */
 export function FeedbackForm() {
   const [sent, setSent] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    setPending(true);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      await submitFeedback({
+        firstName: String(data.get("firstName") ?? "").trim(),
+        lastName: optional(data.get("lastName")),
+        email: String(data.get("email") ?? "").trim(),
+        phone: optional(data.get("phone")),
+        city: optional(data.get("city")),
+        country: optional(data.get("country")),
+        subject: optional(data.get("subject")),
+        type: (optional(data.get("type")) as FeedbackType | undefined) ?? "Suggestions",
+        message: optional(data.get("message")),
+      });
+      form.reset();
+      setSent(true);
+    } catch (err) {
+      setError(formatApiError(err));
+    } finally {
+      setPending(false);
+    }
+  }
 
   if (sent) {
     return (
@@ -24,18 +62,31 @@ export function FeedbackForm() {
         <p className="mx-auto mt-2 max-w-md text-sm text-ink-muted">
           We appreciate you taking the time to share your suggestions and comments with the Consulate.
         </p>
+        <button
+          type="button"
+          onClick={() => setSent(false)}
+          className="mt-6 text-sm font-semibold text-primary hover:underline"
+        >
+          Submit more feedback
+        </button>
       </div>
     );
   }
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSent(true);
-      }}
+      onSubmit={onSubmit}
       className="rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8"
     >
+      {error ? (
+        <div
+          role="alert"
+          className="mb-5 rounded-xl border border-notice-border bg-notice-bg px-4 py-3 text-sm text-notice-ink"
+        >
+          {error}
+        </div>
+      ) : null}
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="firstName" className={labelClass}>
@@ -84,8 +135,8 @@ export function FeedbackForm() {
             Message Type
           </label>
           <select id="type" name="type" className={inputClass} defaultValue="Suggestions">
-            <option>Suggestions</option>
-            <option>Comments</option>
+            <option value="Suggestions">Suggestions</option>
+            <option value="Comments">Comments</option>
           </select>
         </div>
         <div className="sm:col-span-2">
@@ -98,9 +149,10 @@ export function FeedbackForm() {
 
       <button
         type="submit"
-        className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+        disabled={pending}
+        className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Submit feedback
+        {pending ? "Submitting…" : "Submit feedback"}
         <Icon name="arrowRight" size={16} />
       </button>
     </form>

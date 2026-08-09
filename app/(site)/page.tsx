@@ -6,7 +6,8 @@ import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/icons";
 import { homeHero, homeIntro, quickLinks } from "@/content/home";
-import { audiencePaths, newsItems } from "@/content/news";
+import { audiencePaths } from "@/content/news";
+import { fetchPublishedNews } from "@/lib/api";
 import { site } from "@/lib/site";
 import { heroImages } from "@/lib/hero-images";
 import type { IconName } from "@/lib/types";
@@ -18,7 +19,6 @@ export const metadata: Metadata = {
 
 const featured = quickLinks.slice(0, 3);
 const moreLinks = quickLinks.slice(3);
-const [leadStory, ...otherNews] = newsItems.slice(0, 3);
 
 const formatNewsDate = (date: string) =>
   new Date(date).toLocaleDateString("en-GB", {
@@ -77,7 +77,10 @@ const eServices = [
   { label: "gov.ph", href: site.external.government },
 ] as const;
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { items: newsItems } = await fetchPublishedNews();
+  const [leadStory, ...otherNews] = newsItems.slice(0, 3);
+
   return (
     <>
       {/* Hero */}
@@ -335,84 +338,90 @@ export default function HomePage() {
         subtitle="Latest notices from the Consulate General in Kathmandu."
         className="bg-primary-50"
       >
-        <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-          {/* Lead story */}
-          <Link
-            href={`/news#${leadStory.slug}`}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition-shadow hover:shadow-card-hover"
-          >
-            <div className="relative h-52 overflow-hidden md:h-64">
-              <Image
-                src={heroImages.aboutUs.src}
-                alt=""
-                fill
-                quality={85}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-[linear-gradient(to_top,rgba(14,18,48,0.7),rgba(14,18,48,0.05))]"
-              />
-              <span className="absolute left-5 top-5 rounded-full bg-flag-yellow px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-ink">
-                {leadStory.category}
-              </span>
-              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-                <time dateTime={leadStory.date} className="text-xs font-medium text-white/75">
-                  {formatNewsDate(leadStory.date)}
-                </time>
-                <h3 className="mt-1 font-heading text-lg font-semibold text-white md:text-xl">
-                  {leadStory.title}
-                </h3>
-              </div>
-            </div>
-            <div className="flex flex-1 flex-col p-5 md:p-6">
-              <p className="text-sm leading-relaxed text-ink-muted">{leadStory.summary}</p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                Read the notice
-                <Icon
-                  name="arrowRight"
-                  size={15}
-                  className="transition-transform group-hover:translate-x-1"
+        {leadStory ? (
+          <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+            {/* Lead story */}
+            <Link
+              href={`/news/${leadStory.slug}`}
+              className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition-shadow hover:shadow-card-hover"
+            >
+              <div className="relative h-52 overflow-hidden md:h-64">
+                <Image
+                  src={heroImages.aboutUs.src}
+                  alt=""
+                  fill
+                  quality={85}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-              </span>
-            </div>
-          </Link>
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-[linear-gradient(to_top,rgba(14,18,48,0.7),rgba(14,18,48,0.05))]"
+                />
+                <span className="absolute left-5 top-5 rounded-full bg-flag-yellow px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-ink">
+                  {leadStory.category}
+                </span>
+                <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+                  <time dateTime={leadStory.date} className="text-xs font-medium text-white/75">
+                    {formatNewsDate(leadStory.date)}
+                  </time>
+                  <h3 className="mt-1 font-heading text-lg font-semibold text-white md:text-xl">
+                    {leadStory.title}
+                  </h3>
+                </div>
+              </div>
+              <div className="flex flex-1 flex-col p-5 md:p-6">
+                <p className="text-sm leading-relaxed text-ink-muted">{leadStory.summary}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                  Read the notice
+                  <Icon
+                    name="arrowRight"
+                    size={15}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </span>
+              </div>
+            </Link>
 
-          {/* Recent notices */}
-          <ul className="flex flex-col gap-4">
-            {otherNews.map((item, i) => {
-              const bar = i === 0 ? "bg-flag-yellow" : "bg-flag-red";
-              const badge = i === 0 ? "bg-[#fff6d6] text-[#8a6d00]" : "bg-[#fde8eb] text-flag-red";
-              return (
-                <li key={item.slug} className="flex-1">
-                  <Link
-                    href={`/news#${item.slug}`}
-                    className="group relative flex h-full gap-4 overflow-hidden rounded-2xl border border-line bg-white p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover md:p-6"
-                  >
-                    <div aria-hidden className={`absolute inset-y-0 left-0 w-1.5 ${bar}`} />
-                    <div className="min-w-0 pl-2">
-                      <div className="flex flex-wrap items-center gap-2 text-xs">
-                        <span
-                          className={`rounded-full px-2.5 py-0.5 font-semibold uppercase tracking-wide ${badge}`}
-                        >
-                          {item.category}
-                        </span>
-                        <time dateTime={item.date} className="text-ink-muted">
-                          {formatNewsDate(item.date)}
-                        </time>
+            {/* Recent notices */}
+            <ul className="flex flex-col gap-4">
+              {otherNews.map((item, i) => {
+                const bar = i === 0 ? "bg-flag-yellow" : "bg-flag-red";
+                const badge = i === 0 ? "bg-[#fff6d6] text-[#8a6d00]" : "bg-[#fde8eb] text-flag-red";
+                return (
+                  <li key={item.slug} className="flex-1">
+                    <Link
+                      href={`/news/${item.slug}`}
+                      className="group relative flex h-full gap-4 overflow-hidden rounded-2xl border border-line bg-white p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover md:p-6"
+                    >
+                      <div aria-hidden className={`absolute inset-y-0 left-0 w-1.5 ${bar}`} />
+                      <div className="min-w-0 pl-2">
+                        <div className="flex flex-wrap items-center gap-2 text-xs">
+                          <span
+                            className={`rounded-full px-2.5 py-0.5 font-semibold uppercase tracking-wide ${badge}`}
+                          >
+                            {item.category}
+                          </span>
+                          <time dateTime={item.date} className="text-ink-muted">
+                            {formatNewsDate(item.date)}
+                          </time>
+                        </div>
+                        <h3 className="mt-2.5 font-heading text-base font-semibold text-ink group-hover:text-primary">
+                          {item.title}
+                        </h3>
+                        <p className="mt-2 text-sm leading-relaxed text-ink-muted">{item.summary}</p>
                       </div>
-                      <h3 className="mt-2.5 font-heading text-base font-semibold text-ink group-hover:text-primary">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-ink-muted">{item.summary}</p>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : (
+          <p className="text-center text-sm text-ink-muted">
+            No announcements are published at this time.
+          </p>
+        )}
         <div className="mt-8 text-center">
           <ButtonLink href="/news" variant="primary">
             View all announcements
