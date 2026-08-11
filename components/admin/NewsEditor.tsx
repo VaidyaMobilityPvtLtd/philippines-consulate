@@ -2,6 +2,13 @@
 
 import { useMemo, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import "easymde/dist/easymde.min.css";
+
+const SimpleMdeReact = dynamic(
+  () => import("react-simplemde-editor"),
+  { ssr: false }
+);
 import {
   createAdminNews,
   formatApiError,
@@ -14,6 +21,11 @@ import {
   adminFieldClass,
   adminLabelClass,
 } from "@/components/admin/ui";
+
+const mdeOptions = {
+  spellChecker: false,
+  maxHeight: "400px",
+};
 
 function slugify(title: string) {
   return title
@@ -31,7 +43,9 @@ export function NewsEditor({ item }: { item?: NewsItem }) {
   const [title, setTitle] = useState(item?.title ?? "");
   const [slug, setSlug] = useState(item?.slug ?? "");
   const [slugTouched, setSlugTouched] = useState(Boolean(item));
-  const [bodyText, setBodyText] = useState((item?.body ?? [""]).join("\n\n"));
+  const [bodyText, setBodyText] = useState(
+    Array.isArray(item?.body) ? item.body.join("\n\n") : (item?.body ?? "")
+  );
   const [published, setPublished] = useState(item?.published ?? true);
 
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
@@ -42,10 +56,6 @@ export function NewsEditor({ item }: { item?: NewsItem }) {
     setPending(true);
 
     const data = new FormData(e.currentTarget);
-    const body = bodyText
-      .split(/\n\s*\n/)
-      .map((p) => p.trim())
-      .filter(Boolean);
 
     const payload: CreateNewsInput = {
       slug: String(data.get("slug") ?? "").trim(),
@@ -53,7 +63,7 @@ export function NewsEditor({ item }: { item?: NewsItem }) {
       date: String(data.get("date") ?? "").trim(),
       category: String(data.get("category") ?? "Notice") as NewsCategory,
       summary: String(data.get("summary") ?? "").trim(),
-      body: body.length ? body : [""],
+      body: [bodyText],
       published,
     };
 
@@ -190,16 +200,15 @@ export function NewsEditor({ item }: { item?: NewsItem }) {
               Body paragraphs
             </label>
             <p className="mb-1.5 text-xs text-ink-muted">
-              Separate paragraphs with a blank line.
+              Use Markdown to format the content.
             </p>
-            <textarea
-              id="body"
-              required
-              rows={10}
-              value={bodyText}
-              onChange={(e) => setBodyText(e.target.value)}
-              className={`${adminFieldClass} min-h-[220px] leading-relaxed`}
-            />
+            <div>
+              <SimpleMdeReact
+                value={bodyText}
+                onChange={setBodyText}
+                options={mdeOptions}
+              />
+            </div>
           </div>
         </div>
       </section>

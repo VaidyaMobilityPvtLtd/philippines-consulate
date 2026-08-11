@@ -113,6 +113,14 @@ export async function deleteAdminNews(id: string, token?: string) {
   );
 }
 
+export async function getAdminNewsById(
+  id: string,
+  token?: string,
+): Promise<NewsItem | null> {
+  const { items } = await listAdminNews(token);
+  return items.find((item) => item.id === id) ?? null;
+}
+
 export async function listAdminContacts(token?: string) {
   return adminFetch<{ items: ContactSubmission[] }>(apiUrl("/api/admin/contact"), undefined, token);
 }

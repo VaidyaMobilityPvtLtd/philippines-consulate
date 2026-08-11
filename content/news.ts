@@ -6,7 +6,7 @@ export type NewsItem = {
   date: string;
   category: "Announcement" | "Advisory" | "Notice";
   summary: string;
-  body: string[];
+  body: string;
 };
 
 /**
@@ -21,10 +21,7 @@ export const newsItems: NewsItem[] = [
     category: "Notice",
     summary:
       "The Consulate General in Kathmandu receives clients Monday to Friday, 9:00 AM – 3:00 PM, with lunch break from 1:00 – 2:00 PM.",
-    body: [
-      "Please plan your visit within regular office hours. The Consulate is closed on Philippine and Nepali public holidays.",
-      "For visa, passport, and civil registration inquiries, you may also email philcongen@voith.com.np or call +977-1-4008801 to 05.",
-    ],
+    body: "Please plan your visit within regular office hours. The Consulate is closed on Philippine and Nepali public holidays.\n\nFor visa, passport, and civil registration inquiries, you may also email philcongen@voith.com.np or call +977-1-4008801 to 05.",
   },
   {
     slug: "passport-application-guidance",
@@ -33,11 +30,7 @@ export const newsItems: NewsItem[] = [
     category: "Advisory",
     summary:
       "All first-time, renewal, and lost-passport applicants must appear in person with complete documentary requirements.",
-    body: [
-      "Bring original documents and photocopies. Incomplete applications may delay processing.",
-      "Passport fees are payable via deposit to Standard Chartered Bank Nepal Limited (A/C 01-0209171-01).",
-      "See Passport Services for full requirement checklists.",
-    ],
+    body: "Bring original documents and photocopies. Incomplete applications may delay processing.\n\nPassport fees are payable via deposit to Standard Chartered Bank Nepal Limited (A/C 01-0209171-01).\n\nSee Passport Services for full requirement checklists.",
   },
   {
     slug: "visa-entry-reminder",
@@ -46,11 +39,7 @@ export const newsItems: NewsItem[] = [
     category: "Advisory",
     summary:
       "Travelers should confirm visa-free eligibility, passport validity (at least six months), and supporting documents before departure.",
-    body: [
-      "Nationals of visa-free countries may generally stay up to 21 days for tourism or business, subject to immigration rules.",
-      "Longer stays or other purposes require a visa from the Consulate before travel.",
-      "Review Visa & Migration for categories, fees, and country lists.",
-    ],
+    body: "Nationals of visa-free countries may generally stay up to 21 days for tourism or business, subject to immigration rules.\n\nLonger stays or other purposes require a visa from the Consulate before travel.\n\nReview Visa & Migration for categories, fees, and country lists.",
   },
   {
     slug: "civil-registration-abroad",
@@ -59,10 +48,7 @@ export const newsItems: NewsItem[] = [
     category: "Announcement",
     summary:
       "Filipino nationals may report births, marriages, and deaths that occurred abroad through the Consulate’s registration services.",
-    body: [
-      "Timely reporting helps ensure civil registry records with the Philippine Statistics Authority.",
-      "Contact the Consulate for forms and supporting document checklists.",
-    ],
+    body: "Timely reporting helps ensure civil registry records with the Philippine Statistics Authority.\n\nContact the Consulate for forms and supporting document checklists.",
   },
 ];
 

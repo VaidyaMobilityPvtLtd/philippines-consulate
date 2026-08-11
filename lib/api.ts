@@ -1,4 +1,3 @@
-import { newsItems as staticNews } from "@/content/news";
 import type {
   ApiErrorBody,
   CreateContactInput,
@@ -66,63 +65,28 @@ async function request<T>(path: string, init?: RequestOptions): Promise<T> {
   return data;
 }
 
-/** Map static content items into the API shape for offline use. */
-function staticAsApiNews(): NewsItem[] {
-  return staticNews.map((item, index) => ({
-    id: `static-${index}`,
-    slug: item.slug,
-    title: item.title,
-    date: item.date,
-    category: item.category,
-    summary: item.summary,
-    body: item.body,
-    published: true,
-  }));
-}
-
-/**
- * Fetch published news.
- * Mock mode uses static content from content/news.ts (no Express).
- * API mode falls back to static content if Express is unreachable.
- */
 export async function fetchPublishedNews(): Promise<{
   items: NewsItem[];
-  source: "api" | "static" | "fallback";
 }> {
-  if (!isApiEnabled()) {
-    return { items: staticAsApiNews(), source: "static" };
-  }
-
-  try {
-    const data = await request<{ items: NewsItem[] }>("/api/news", {
-      next: { revalidate: 60 },
-    });
-    return { items: data.items ?? [], source: "api" };
-  } catch {
-    return { items: staticAsApiNews(), source: "fallback" };
-  }
+  const data = await request<{ items: NewsItem[] }>("/api/news", {
+    next: { revalidate: 60 },
+  });
+  return { items: data.items ?? [] };
 }
 
 export async function fetchNewsBySlug(slug: string): Promise<{
   item: NewsItem | null;
-  source: "api" | "static" | "fallback";
 }> {
-  if (!isApiEnabled()) {
-    const item = staticAsApiNews().find((n) => n.slug === slug) ?? null;
-    return { item, source: "static" };
-  }
-
   try {
     const data = await request<{ item: NewsItem }>(`/api/news/${encodeURIComponent(slug)}`, {
       next: { revalidate: 60 },
     });
-    return { item: data.item, source: "api" };
+    return { item: data.item };
   } catch (err) {
     if (err instanceof ApiError && err.status === 404) {
-      return { item: null, source: "api" };
+      return { item: null };
     }
-    const fallback = staticAsApiNews().find((n) => n.slug === slug) ?? null;
-    return { item: fallback, source: "fallback" };
+    throw err;
   }
 }
 

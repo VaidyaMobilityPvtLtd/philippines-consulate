@@ -20,7 +20,7 @@ export type NewsItem = {
   date: string;
   category: NewsCategory;
   summary: string;
-  body: string[];
+  body: string | string[];
   published: boolean;
   createdAt?: string;
   updatedAt?: string;
@@ -32,7 +32,7 @@ export type CreateNewsInput = {
   date: string;
   category: NewsCategory;
   summary: string;
-  body: string[];
+  body: string | string[];
   published?: boolean;
 };
 

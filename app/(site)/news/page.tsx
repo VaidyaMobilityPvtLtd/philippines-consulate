@@ -20,7 +20,7 @@ function formatDate(iso: string) {
 }
 
 export default async function NewsPage() {
-  const { items, source } = await fetchPublishedNews();
+  const { items } = await fetchPublishedNews();
 
   return (
     <>
@@ -36,11 +36,6 @@ export default async function NewsPage() {
         imageAlt={heroImages.news.alt}
       />
       <Section>
-        {source === "fallback" ? (
-          <p className="mx-auto mb-6 max-w-3xl rounded-xl border border-line bg-surface-muted px-4 py-3 text-sm text-ink-muted">
-            Live updates are temporarily unavailable. Showing the latest cached notices.
-          </p>
-        ) : null}
 
         {items.length === 0 ? (
           <p className="mx-auto max-w-3xl text-center text-sm text-ink-muted">
@@ -65,14 +60,7 @@ export default async function NewsPage() {
                     </Link>
                   </h2>
                   <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">{item.summary}</p>
-                  <ul className="mt-4 space-y-2 border-t border-line pt-4">
-                    {item.body.map((para) => (
-                      <li key={para} className="flex gap-2.5 text-sm leading-relaxed text-ink-soft">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                        <span>{para}</span>
-                      </li>
-                    ))}
-                  </ul>
+
                   <Link
                     href={`/news/${item.slug}`}
                     className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"

@@ -6,6 +6,21 @@ import { Section } from "@/components/ui/Section";
 import { Icon } from "@/components/icons";
 import { fetchNewsBySlug, fetchPublishedNews } from "@/lib/api";
 import { heroImages } from "@/lib/hero-images";
+import { MDXRemote } from "next-mdx-remote/rsc";
+
+const mdxComponents = {
+  h1: (props: any) => <h1 className="mt-10 mb-5 font-heading text-3xl font-bold tracking-tight text-ink md:text-4xl" {...props} />,
+  h2: (props: any) => <h2 className="mt-10 mb-4 font-heading text-2xl font-semibold tracking-tight text-ink md:text-3xl" {...props} />,
+  h3: (props: any) => <h3 className="mt-8 mb-4 font-heading text-xl font-medium tracking-tight text-ink md:text-2xl" {...props} />,
+  h4: (props: any) => <h4 className="mt-6 mb-3 font-heading text-lg font-medium text-ink" {...props} />,
+  p: (props: any) => <p className="mb-6 text-[15.5px] leading-relaxed text-ink-soft sm:text-base sm:leading-8" {...props} />,
+  ul: (props: any) => <ul className="mb-6 ml-6 list-outside list-disc space-y-2.5 marker:text-primary" {...props} />,
+  ol: (props: any) => <ol className="mb-6 ml-6 list-outside list-decimal space-y-2.5 marker:text-primary" {...props} />,
+  li: (props: any) => <li className="pl-1 text-[15.5px] leading-relaxed text-ink-soft sm:text-base sm:leading-8" {...props} />,
+  a: (props: any) => <a className="font-medium text-primary underline underline-offset-4 hover:text-primary-700 hover:decoration-2" {...props} />,
+  strong: (props: any) => <strong className="font-semibold text-ink" {...props} />,
+  blockquote: (props: any) => <blockquote className="my-6 border-l-4 border-primary bg-surface-muted/50 py-3 pr-4 pl-5 italic text-ink-muted rounded-r-lg" {...props} />,
+};
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -51,14 +66,9 @@ export default async function NewsDetailPage({ params }: Props) {
           <time dateTime={item.date} className="text-sm text-ink-muted">
             {formatDate(item.date)}
           </time>
-          <ul className="mt-6 space-y-3">
-            {item.body.map((para) => (
-              <li key={para} className="flex gap-2.5 text-[15px] leading-relaxed text-ink-soft">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                <span>{para}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-6 text-[15px] text-ink-soft">
+            <MDXRemote source={Array.isArray(item.body) ? item.body.join("\n\n") : (item.body ?? "")} components={mdxComponents} />
+          </div>
           <div className="mt-8 border-t border-line pt-6">
             <Link
               href="/news"

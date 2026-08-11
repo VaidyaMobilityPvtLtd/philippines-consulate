@@ -9,6 +9,6 @@ export default async function AdminConsoleLayout({
   const cookieStore = await cookies();
   const adminToken = cookieStore.get("admin_token")?.value;
 
-  const user = await fetchAdminMe(adminToken);
+  const { user } = await fetchAdminMe(adminToken);
   return <AdminShell user={user}>{children}</AdminShell>;
 }
